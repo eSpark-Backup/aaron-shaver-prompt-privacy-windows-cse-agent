@@ -1,0 +1,20 @@
+app.manifest
+dbconfig.json
+Help.chm
+Resources\logop256.ico
+MetroSet UI.dll
+Microsoft.Extensions.DependencyInjection.Abstractions.dll
+Microsoft.Extensions.Logging.Abstractions.dll
+Newtonsoft.Json.dll
+NLog.dll
+Npgsql.dll
+PromptPrivacy_PostgreDBIntegratorWindows.deps.json
+PromptPrivacy_PostgreDBIntegratorWindows.dll
+PromptPrivacy_PostgreDBIntegratorWindows.dll.config
+PromptPrivacy_PostgreDBIntegratorWindows.exe
+PromptPrivacy_PostgreDBIntegratorWindows.runtimeconfig.json
+System.Diagnostics.DiagnosticSource.dll
+System.Text.Encodings.Web.dll
+System.Text.Json.dll
+x64\SQLite.Interop.dll
+x86\SQLite.Interop.dll

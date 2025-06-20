@@ -1,0 +1,6 @@
+D:\Projects\eSpark_Upwork_AaronShaver\Discussions+Meetings\TestWork\FormsApp\eSpark_dbIndexerPostGre_Setup\bin\Debug\PromptPrivDBindexerPostgre.msi
+D:\Projects\eSpark_Upwork_AaronShaver\Discussions+Meetings\TestWork\FormsApp\eSpark_dbIndexerPostGre_Setup\bin\Debug\PromptPrivDBindexerPostgre.wixpdb
+obj\Debug\Product.wixobj
+obj\Debug\eSpark_dbIndexerPostGre_Setup.wixproj.BindContentsFileListnull.txt
+obj\Debug\eSpark_dbIndexerPostGre_Setup.wixproj.BindOutputsFileListnull.txt
+obj\Debug\eSpark_dbIndexerPostGre_Setup.wixproj.BindBuiltOutputsFileListnull.txt

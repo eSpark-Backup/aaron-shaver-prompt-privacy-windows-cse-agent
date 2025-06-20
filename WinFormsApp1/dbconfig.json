@@ -1,0 +1,27 @@
+{
+  "test_db": {
+    "DbType": "postgresql",
+    "Host": "localhost",
+    "Port": 5432,
+    "Database": "postgres",
+    "Username": "postgres",
+    "Password": "1122"
+  },
+  "postgres": {
+    "DbType": "postgresql",
+    "Host": "localhost",
+    "Port": 5432,
+    "Database": "postgres",
+    "Username": "postgres",
+    "Password": "1122"
+  },
+  "espark_dev1": {
+    "DbType": "postgresql",
+    "Host": "localhost",
+    "Port": 5432,
+    "Database": "postgres",
+    "Username": "postgres",
+    "Password": "1122"
+  }
+
+}

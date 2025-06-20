@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='PromptPrivacy DBIndexer Postgre' Id='82fb98a6-f47f-4476-baaa-799fd3c7975f' UpgradeCode='82fb98a6-f47f-4476-baaa-799fd3c7975f'
+    Language='1033' Codepage='1252' Version='1.0.20.1' Manufacturer='eSpark Consulting Group'>
+
+    <Package InstallPrivileges='elevated' Id='*' Keywords='Installer' Description="eSpark PromptPrivDBindexerPostgre Installer"
+      Comments='PromptPrivacy DBIndexer Postgre is a registered trademark of eSpark Consulting Solutions.' Manufacturer='eSpark_consulting '
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' InstallScope="perMachine"/>
+
+    <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="eSpark_PPdbIntegrator postgre Installation [1]" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='eSpark' Name='eSpark'>
+          <Directory Id='INSTALLDIR' Name='PromptPrivDBindexerPostgre'>
+
+            <Directory Id='Resources' Name='Resources'>
+              <Component Id='Resourcesdirectory' Guid='82fb98a6-f47f-4476-baaa-755fd3c7975f'>
+                <File Id='logop256.ico' Name='logop256.ico' DiskId='1' Source='Resources\logop256.ico'/>
+              </Component>
+            </Directory>
+
+            <Directory Id='x64dir' Name='x64'>
+              <Component Id='x64directory' Guid='82fb98a6-f47f-4476-baaa-711fd3c7975f'>
+                <File Id='x64SQLite.Interop.dll' Name='SQLite.Interop.dll' DiskId='1' Source='x64\SQLite.Interop.dll'/>
+              </Component>
+            </Directory>
+
+            <Directory Id='x86dir' Name='x86'>
+              <Component Id='x86directory' Guid='82fb98a6-f47f-4476-baaa-778fd3c7975f'>
+				  <File Id='x86SQLite.Interop.dll' Name='SQLite.Interop.dll' DiskId='1' Source='x86\SQLite.Interop.dll'/>
+              </Component>
+            </Directory>
+
+
+            <Component Id='MainExecutable' Guid='82fb98a6-f47f-4476-baaa-799fd3c7975f'>
+            <File Id='PromptPrivacy_PostgreDBIntegratorWindows.exe' Name='PromptPrivacy_PostgreDBIntegratorWindows.exe' DiskId='1' Source='PromptPrivacy_PostgreDBIntegratorWindows.exe' KeyPath='yes'>
+				<Shortcut Advertise="yes"
+							Id="desktopSc"
+							Directory="DesktopFolder"
+							Name="PromptPrivacy_PostgreDBIntegratorWindows"
+							WorkingDirectory="INSTALLLOCATION"
+							Description="PromptPrivacy DBIndexer Postgre"
+							Icon="logop256.ico">
+
+				</Shortcut>
+             </File>
+				<File Id='app.manifest' Name='app.manifest' DiskId='1' Source='app.manifest'/>
+				<File Id='PromptPrivacy_PostgreDBIntegratorWindows.dll.config' Name='PromptPrivacy_PostgreDBIntegratorWindows.dll.config' DiskId='1' Source='PromptPrivacy_PostgreDBIntegratorWindows.dll.config'/>
+				<File Id='dbconfig.json' Name='dbconfig.json' DiskId='1' Source='dbconfig.json'/>
+				<File Id='Microsoft.Extensions.DependencyInjection.Abstractions.dll' Name='Microsoft.Extensions.DependencyInjection.Abstractions.dll' DiskId='1' Source='Microsoft.Extensions.DependencyInjection.Abstractions.dll'/>
+				<File Id='Microsoft.Extensions.Logging.Abstractions.dll' Name='Microsoft.Extensions.Logging.Abstractions.dll' DiskId='1' Source='Microsoft.Extensions.Logging.Abstractions.dll'/>
+				<File Id='Newtonsoft.Json.dll' Name='Newtonsoft.Json.dll' DiskId='1' Source='Newtonsoft.Json.dll'/>
+				<File Id='NLog.dll' Name='NLog.dll' DiskId='1' Source='NLog.dll'/>
+				<File Id='Npgsql.dll' Name='Npgsql.dll' DiskId='1' Source='Npgsql.dll'/>
+				<File Id='PromptPrivacy_PostgreDBIntegratorWindows.deps.json' Name='PromptPrivacy_PostgreDBIntegratorWindows.deps.json' DiskId='1' Source='PromptPrivacy_PostgreDBIntegratorWindows.deps.json'/>
+				<File Id='PromptPrivacy_PostgreDBIntegratorWindows.dll' Name='PromptPrivacy_PostgreDBIntegratorWindows.dll' DiskId='1' Source='PromptPrivacy_PostgreDBIntegratorWindows.dll'/>
+				<File Id='PromptPrivacy_PostgreDBIntegratorWindows.runtimeconfig.json' Name='PromptPrivacy_PostgreDBIntegratorWindows.runtimeconfig.json' DiskId='1' Source='PromptPrivacy_PostgreDBIntegratorWindows.runtimeconfig.json'/>
+				<File Id='System.Diagnostics.DiagnosticSource.dll' Name='System.Diagnostics.DiagnosticSource.dll' DiskId='1' Source='System.Diagnostics.DiagnosticSource.dll'/>
+				<File Id='System.Text.Encodings.Web.dll' Name='System.Text.Encodings.Web.dll' DiskId='1' Source='System.Text.Encodings.Web.dll'/>
+				<File Id='System.Text.Json.dll' Name='System.Text.Json.dll' DiskId='1' Source='System.Text.Json.dll'/>
+				<File Id='MetroSetUI.dll' Name='MetroSet UI.dll' DiskId='1' Source='MetroSet UI.dll'/>
+				
+			</Component>
+
+            <Component Id='HelperLibrary' Guid='82fb98a6-f47f-4476-baaa-799fd399999f'>
+              <File Id='HelperDLL' Name='Help.chm' DiskId='1' Source='Help.chm' KeyPath='yes' />
+            </Component>
+
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="PromptPrivDBindexerPostgre">
+          <Component Id="ProgramMenuDir" Guid="82fb98a6-f47f-4476-baaa-799fd3c77780">
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <Feature Id='Complete' Level='1'>
+      <ComponentRef Id='MainExecutable' />
+      <ComponentRef Id='HelperLibrary' />
+      <ComponentRef Id='ProgramMenuDir' />
+      <ComponentRef Id='x86directory' />
+      <ComponentRef Id='x64directory' />
+      <ComponentRef Id='Resourcesdirectory' />
+      
+    </Feature>
+
+    <Icon Id="logop256.ico" SourceFile="PromptPrivacy_PostgreDBIntegratorWindows.exe" />
+
+  </Product>
+</Wix>

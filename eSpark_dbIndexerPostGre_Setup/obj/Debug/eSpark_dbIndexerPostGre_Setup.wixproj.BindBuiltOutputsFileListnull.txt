@@ -1,0 +1,2 @@
+D:\Projects\eSpark_Upwork_AaronShaver\Discussions+Meetings\TestWork\FormsApp\eSpark_dbIndexerPostGre_Setup\bin\Debug\PromptPrivDBindexerPostgre.msi
+D:\Projects\eSpark_Upwork_AaronShaver\Discussions+Meetings\TestWork\FormsApp\eSpark_dbIndexerPostGre_Setup\bin\Debug\PromptPrivDBindexerPostgre.wixpdb

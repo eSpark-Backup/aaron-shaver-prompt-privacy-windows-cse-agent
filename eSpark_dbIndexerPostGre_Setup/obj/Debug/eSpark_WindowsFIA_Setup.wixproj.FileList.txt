@@ -1,0 +1,8 @@
+obj\Debug\Product.wixobj
+C:\Users\masb\Desktop\eSpark_WindowsFIA\eSpark_WindowsFIA_Setup\bin\Debug\WindowsFIA_Setup.msi
+C:\Users\masb\Desktop\eSpark_WindowsFIA\eSpark_WindowsFIA_Setup\bin\Debug\WindowsFIA_Setup.wixpdb
+obj\Debug\eSpark_WindowsFIA_Setup.wixproj.BindContentsFileListnull.txt
+obj\Debug\eSpark_WindowsFIA_Setup.wixproj.BindOutputsFileListnull.txt
+obj\Debug\eSpark_WindowsFIA_Setup.wixproj.BindBuiltOutputsFileListnull.txt
+D:\Backup2\cBack\eSpark_WindowsFIA\eSpark_WindowsFIA_Setup\bin\Debug\WindowsFIA_Setup.msi
+D:\Backup2\cBack\eSpark_WindowsFIA\eSpark_WindowsFIA_Setup\bin\Debug\WindowsFIA_Setup.wixpdb

@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dbIntegrator_postgre", "dbIntegrator_postgre.csproj", "{50EE443C-4E80-4883-A703-F611DAE7A768}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "eSpark_dbIndexerPostGre_Setup", "..\eSpark_dbIndexerPostGre_Setup\eSpark_dbIndexerPostGre_Setup.wixproj", "{1C646648-4417-4612-8A9F-8B9095742277}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Debug|x86.Build.0 = Debug|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Release|x86.ActiveCfg = Release|Any CPU
+		{50EE443C-4E80-4883-A703-F611DAE7A768}.Release|x86.Build.0 = Release|Any CPU
+		{1C646648-4417-4612-8A9F-8B9095742277}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Debug|Any CPU.Build.0 = Debug|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Debug|x86.ActiveCfg = Debug|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Debug|x86.Build.0 = Debug|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Release|Any CPU.ActiveCfg = Release|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Release|Any CPU.Build.0 = Release|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Release|x86.ActiveCfg = Release|x86
+		{1C646648-4417-4612-8A9F-8B9095742277}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B23C5067-5E46-440C-9F42-26FA79A1E1AE}
+	EndGlobalSection
+EndGlobal
