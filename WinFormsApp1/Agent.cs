@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using System.Text.Json.Nodes;
 using Newtonsoft.Json.Linq;
 using NLog;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace AgentApp
 {
@@ -379,7 +381,7 @@ namespace AgentApp
                 //await conn.OpenAsync();
                 //using var conn= new NpgsqlConnection();//tempconn
                 object result = null;
-                JsonObject Json_result = new JsonObject();
+                JObject Json_result = new JObject();
 
                 if (method == "get-database-metadata")
                 {
@@ -387,6 +389,8 @@ namespace AgentApp
                     //{              
                     //var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
                     result = await PostgresHelper.GetMetadataAsync(databaseName);
+                    //Json_result = (JObject)JsonConvert.DeserializeObject(result.ToString());
+                    
                     Program.loger.Log(LogLevel.Info, "================== Payload get-database-metadata ===============" + result);
                     OnLog?.Invoke($"Parsed Payload get-database-metadata : {result}");
 
@@ -402,7 +406,32 @@ namespace AgentApp
                     //if (databasetype == "postgresql")
                     //{
                         //var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
-                        result = await PostgresHelper.GetTablesFullInfoAsync(databaseName);
+                    result = await PostgresHelper.GetTablesFullInfoAsync(databaseName);
+                    object resulttmp = result;
+
+                    Regex regex = new Regex("\"table_name\":\"\\w*\",");
+                    Match match = regex.Match(JsonConvert.SerializeObject(result));
+                    List<String> tablsNames = new List<string>();
+                    while (match.Success)
+                    {
+                        Console.WriteLine("Match Value: " + match.Value);
+                        String st = Regex.Replace(match.Value, "\"table_name\":\"", "");
+                        st = st.Substring(0, st.Length - 2);
+                        tablsNames.Add(st);
+
+                        resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), match.Value, ""));
+
+                        match = match.NextMatch();
+                    }
+
+                    int cntLists = tablsNames.Count;
+                    for (int i = 0; i < cntLists; i++)//tableInfo
+                    {
+                        resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), "tableInfo", tablsNames[0]));
+                        tablsNames.RemoveAt(0);
+                    }
+                    result = resulttmp;
+
                         Program.loger.Log(LogLevel.Info, "================== Payload get-tables-details ===============" + result);
                         OnLog?.Invoke($"Parsed Payload get-tables-details : {result}");
 
@@ -464,32 +493,40 @@ namespace AgentApp
                         success = true
                     };
                 else if (method == "get-tables-details")
+                {
+                    //"tables_detail": [
+                    //            {
+                    //    "table_name": "esindexer_settings",
+                    //          "tableInfo": {
+                    //        "column_count": 3,
+
                     response = new
                     {
-                        tables_detail = result,
                         message = "Database request completed successfully.",
                         request_id = requestIdProp.GetString(),
                         request_type = "database_indexer",
-                        success = true
+                        success = true,
+                        tables_detail = result
                     };
+                }
                 else if (method == "perform-query-execution")
                     response = new
                     {
-                        tables_detail = result,//db_metadata = result,
                         message = "Database request completed successfully.",
                         request_id = requestIdProp.GetString(),
                         request_type = "database_indexer",
-                        success = true
+                        success = true,
+                        result = result //db_metadata = result,
                     };
 
 
 
                 //await _socket.SendAsync(JsonSerializer.Serialize(response));
                 //Console.WriteLine(JsonConvert.SerializeObject(response));
-                Program.loger.Log(LogLevel.Info, " Json Sent .... "+ JsonConvert.SerializeObject(response));
-                OnLog?.Invoke(" Json Sent .... " + JsonConvert.SerializeObject(response));
+                Program.loger.Log(LogLevel.Info, " Json Sent .... "+ JObject.Parse(JsonConvert.SerializeObject(response)));
+                OnLog?.Invoke(" Json Sent .... " + JObject.Parse(JsonConvert.SerializeObject(response)));
 
-                var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
+                var bytes = Encoding.UTF8.GetBytes(JObject.Parse(JsonConvert.SerializeObject(response)).ToString());
                 await _socket.SendAsync(bytes, WebSocketMessageType.Text, true, _cts.Token);
             }
             catch (Exception ex)

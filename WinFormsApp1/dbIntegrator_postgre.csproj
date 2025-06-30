@@ -29,6 +29,7 @@
     <Compile Remove="Form1OLD.cs" />
     <Compile Remove="Form1OLD.Designer.cs" />
     <Compile Remove="Logger.cs" />
+    <Compile Remove="PostgresHelper_old.cs" />
   </ItemGroup>
 
   <ItemGroup>
