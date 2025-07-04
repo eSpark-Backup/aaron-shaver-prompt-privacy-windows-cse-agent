@@ -28,6 +28,7 @@
   <ItemGroup>
     <Content Include="app.manifest" />
     <Content Include="dbconfig.json" />
+    <Content Include="FlexMold.db" />
     <Content Include="Help.chm" />
     <Content Include="Manual.pdf" />
     <Content Include="MetroSet UI.dll" />
@@ -46,6 +47,9 @@
     <Content Include="Resources\AppIcon.ico" />
     <Content Include="Resources\dbIntegrator.png" />
     <Content Include="Resources\logop256.ico" />
+    <Content Include="System.Data.SQLite.dll" />
+    <Content Include="System.Data.SQLite.EF6.dll" />
+    <Content Include="System.Data.SQLite.Linq.dll" />
     <Content Include="System.Diagnostics.DiagnosticSource.dll" />
     <Content Include="System.Text.Encodings.Web.dll" />
     <Content Include="System.Text.Json.dll" />

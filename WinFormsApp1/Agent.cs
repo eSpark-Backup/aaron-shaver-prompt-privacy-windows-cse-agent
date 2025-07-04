@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using NLog;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AgentApp
 {
@@ -28,6 +29,12 @@ namespace AgentApp
 
         public Agent(string uuid, string type,string Secret_Key,string Tenant_UUID)
         {
+            //{
+            //"database_type": "postgres",
+            //"secret_key": "eba417b590de16d722c3d0ccbc5ac9ef952df26528a6f2903a2af74d6cce27b1",
+            //"agent_uuid": "6dcbd2d4-0f34-4bc9-a482-17a8c7b45f4f",
+            //"tenant_uuid": "e115fb59-060d-489d-aa08-7a741fe1d664"}
+
             //02JUNE2025 -- file_indexer
             //"agent_uuid": "9c85ab8d-d784-47d3-bf08-7bdcc669ca96",
             //"secret_key": "a62f456668e2e5dec68913d18bc7866faf39ae72efb679168c64f2bb21e9e244", 
@@ -407,30 +414,48 @@ namespace AgentApp
                     //{
                         //var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
                     result = await PostgresHelper.GetTablesFullInfoAsync(databaseName);
-                    object resulttmp = result;
+                    //object resulttmp = result;
 
-                    Regex regex = new Regex("\"table_name\":\"\\w*\",");
-                    Match match = regex.Match(JsonConvert.SerializeObject(result));
-                    List<String> tablsNames = new List<string>();
-                    while (match.Success)
-                    {
-                        Console.WriteLine("Match Value: " + match.Value);
-                        String st = Regex.Replace(match.Value, "\"table_name\":\"", "");
-                        st = st.Substring(0, st.Length - 2);
-                        tablsNames.Add(st);
+                    //Regex regex = new Regex("\"table_name\":\"\\w*\",");
+                    //Match match = regex.Match(JsonConvert.SerializeObject(result));
+                    //List<String> tablsNames = new List<string>();
+                    //while (match.Success)
+                    //{
+                    //    Console.WriteLine("Match Value: " + match.Value);
+                    //    String st = Regex.Replace(match.Value, "\"table_name\":\"", "");
+                    //    st = st.Substring(0, st.Length - 2);                        
+                        
+                    //    tablsNames.Add(st);
 
-                        resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), match.Value, ""));
+                    //    resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), match.Value, ""));
 
-                        match = match.NextMatch();
-                    }
+                    //    match = match.NextMatch();
+                    //}
 
-                    int cntLists = tablsNames.Count;
-                    for (int i = 0; i < cntLists; i++)//tableInfo
-                    {
-                        resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), "tableInfo", tablsNames[0]));
-                        tablsNames.RemoveAt(0);
-                    }
-                    result = resulttmp;
+                    //int cntLists = tablsNames.Count;
+                    //String tmpUpdatetableInfo = JsonConvert.SerializeObject(resulttmp);
+                    //for (int i = 0; i < cntLists; i++)//tableInfo
+                    //{
+                    //    tmpUpdatetableInfo = tmpUpdatetableInfo = ReplaceFirstOccurrence(tmpUpdatetableInfo, "tableInfo", tablsNames[i]);
+                    //    //resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), "tableInfo", tablsNames[0]));
+                    //    //resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), "tables_detail\" [", "tables_detail\" "));
+                    //    //resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), "]",""));
+                    //    //tablsNames.RemoveAt(0);
+                    //}
+                    
+                    //resulttmp = JsonConvert.DeserializeObject(tmpUpdatetableInfo);
+
+                    //resulttmp = JsonConvert.DeserializeObject(Regex.Replace(JsonConvert.SerializeObject(resulttmp), "tableInfo", tablsNames[0]));
+                    
+                    //String removeArraytableinfo = ReplaceFirstOccurrence(tmpUpdatetableInfo, "[", "");
+                    //removeArraytableinfo = ReplaceLastOccurrence(removeArraytableinfo, "]", "");
+                    //resulttmp = JsonConvert.DeserializeObject(removeArraytableinfo);
+                    
+                    //JsonConvert.SerializeObject(resulttmp).Replace("[{\"es", "\"{\"es").Replace("}}]", "}}")
+                    //resulttmp = JsonConvert.DeserializeObject(Regex.Replace( JsonConvert.SerializeObject(resulttmp));
+                    //result = resulttmp;
+                    //result = JsonConvert.DeserializeObject("{\r\n  \"message\": \"Database request completed successfully.\",\r\n  \"request_id\": \"711d0182-be73-4758-aac0-641f9758ca2e\",\r\n  \"request_type\": \"database_indexer\",\r\n  \"success\": true,\r\n  \"tables_detail\": [\r\n    {\r\n      \"esindexer_settings\": {\r\n        \"column_count\": 3,\r\n        \"row_count\": 3,\r\n        \"schema_name\": \"public\",\r\n        \"table_body\": {\r\n          \"fm_saltkey\": [\r\n            \"Salt1\",\r\n            \"Salt2\",\r\n            \"Salt3\"\r\n          \r\n          \"fm_username\": [\r\n            \"test_user1\",\r\n            \"test_user2\",\r\n            \"test_user3\"\r\n          ],\r\n          \"fm_dept\": [\r\n            \"dev1\",\r\n            \"prod1\",\r\n            \"support1\"\r\n          ]\r\n        },\r\n        \"table_schema\": [\r\n          {\r\n            \"schema\": \"public\",\r\n            \"name\": \"fm_saltkey\",\r\n            \"column_type\": \"text\"\r\n          },\r\n          {\r\n            \"schema\": \"public\",\r\n            \"name\": \"fm_username\",\r\n            \"column_type\": \"text\"\r\n          },\r\n          {\r\n            \"schema\": \"public\",\r\n            \"name\": \"fm_dept\",\r\n            \"column_type\": \"text\"\r\n          }\r\n        ],\r\n        \"table_size\": 16384\r\n      },\r\n      \"info\": {\r\n        \"Item1\": 16384,\r\n        \"Item2\": 3\r\n      }\r\n    }\r\n  ]\r\n}");
+
 
                         Program.loger.Log(LogLevel.Info, "================== Payload get-tables-details ===============" + result);
                         OnLog?.Invoke($"Parsed Payload get-tables-details : {result}");
@@ -507,6 +532,7 @@ namespace AgentApp
                         request_type = "database_indexer",
                         success = true,
                         tables_detail = result
+                        //tables_detail = result
                     };
                 }
                 else if (method == "perform-query-execution")
@@ -537,6 +563,26 @@ namespace AgentApp
             }
 
 
+        }
+
+        public static string ReplaceLastOccurrence(string source, string find, string replace)
+        {
+            int place = source.LastIndexOf(find);
+
+            if (place == -1)
+                return source;
+
+            return source.Remove(place, find.Length).Insert(place, replace);
+        }
+
+        public static string ReplaceFirstOccurrence(string source, string find, string replace)
+        {
+            int place = source.IndexOf(find);
+
+            if (place == -1)
+                return source;
+
+            return source.Remove(place, find.Length).Insert(place, replace);
         }
 
         private async Task SendErrorAsync(string error, string requestType)

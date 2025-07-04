@@ -28,15 +28,15 @@ namespace AgentApp
         public long table_size { get; set; }
     }
 
-    public class TableInfoLister
-    {
-        public string table_name { get; set; }
-        public TableInfo tableInfo { get; set; }
-        //public String schema_name { get; set; }
-        //public Dictionary<string ,List<object>> table_body { get; set; }
-        //public List<Dictionary<string, object>> schema { get; set; }
-        public (long, long) info { get; set; }        
-    }
+    //public class TableInfoLister
+    //{
+    //    public string table_name { get; set; }
+    //    public TableInfo tableInfo { get; set; }
+    //    //public String schema_name { get; set; }
+    //    //public Dictionary<string ,List<object>> table_body { get; set; }
+    //    //public List<Dictionary<string, object>> schema { get; set; }
+    //    //public (long, long) info { get; set; }        
+    //}
 
     public static class PostgresHelper
     {
@@ -121,13 +121,14 @@ namespace AgentApp
             //    return response_object
 
             //System.Collections.Generic.List<string, string, string, string, string, table_nameList> GetTablesFullInfoMetadata = new System.Collections.Generic.List<string, string, string, string, string, table_nameList>();
-
-            TableInfoLister TableInfoLister1= new TableInfoLister();
-            List<TableInfoLister> TableInfoListerCollection = new List<TableInfoLister>();
+            //List<TableInfo> tblinfolst = new List<TableInfo>();
+            Dictionary<string, TableInfo> tableInfoDict = new Dictionary<string, TableInfo>();
+            //TableInfoLister TableInfoLister1= new TableInfoLister();
+            //List<TableInfoLister> TableInfoListerCollection = new List<TableInfoLister>();
 
             foreach (var table in tables)
             {
-                TableInfoLister1 = new TableInfoLister();
+                //TableInfoLister1 = new TableInfoLister();
                 var table_name = table["table_name"].ToString();
                 var schema_name = table["schema"].ToString();//		schema_name	null	string
                 var schema = await GetPostgresTableSchemaAsync(table_name, schema_name, conn_postgresql);//System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, object>>
@@ -145,13 +146,25 @@ namespace AgentApp
                 //    column_count = schema.Count
                 //});
 
-                TableInfoLister1.table_name = table_name;//"table_name": "esindexer_settings",
+                //TableInfoLister1.table_name = table_name;//"table_name": "esindexer_settings",
                 //TableInfoLister1.schema_name = schema_name;//"schema_name": "public",
                 //TableInfoLister1.table_body = body;//"body": {        "fm_saltkey": [
                 //TableInfoLister1.schema = schema;//"schema": [  { "schema": "public",
-                TableInfoLister1.info = info;//"info": {    "Item1": 16384, "Item2": 3
-                TableInfoLister1.tableInfo = (new TableInfo //      "tableInfo": {  "column_count": 3,  "row_count": 3, "schema_name": "public",
-                {                   
+                //TableInfoLister1.info = info;//"info": {    "Item1": 16384, "Item2": 3
+                //TableInfoLister1.tableInfo = (new TableInfo //      "tableInfo": {  "column_count": 3,  "row_count": 3, "schema_name": "public",
+                //{                   
+                //    column_count = schema.Count,
+                //    //row_count = info.Item2,
+                //    schema_name = schema_name,
+                //    table_body = body,
+                //    table_schema = schema,
+                //    //table_size = info.Item1
+                //});
+
+                //TableInfoListerCollection.Add(TableInfoLister1);
+
+                tableInfoDict.Add(table_name, new TableInfo
+                {
                     column_count = schema.Count,
                     row_count = info.Item2,
                     schema_name = schema_name,
@@ -160,7 +173,14 @@ namespace AgentApp
                     table_size = info.Item1
                 });
 
-                TableInfoListerCollection.Add(TableInfoLister1);
+                //tblinfolst.Add(new TableInfo {
+                //    column_count = schema.Count,
+                //    //row_count = info.Item2,
+                //    schema_name = schema_name,
+                //    table_body = body,
+                //    table_schema = schema,
+                //    //table_size = info.Item1
+                //});
 
                 //    result = new Dictionary<string, object>();
                 //    result.Add("TableName", tableName);
@@ -179,7 +199,8 @@ namespace AgentApp
             //return JsonConvert.SerializeObject(result);
             //return JsonConvert.SerializeObject(table_nameList);
             //return JsonConvert.SerializeObject(resultJson);
-            return TableInfoListerCollection;
+            //return TableInfoListerCollection;
+            return tableInfoDict;
         }
 
         private static async Task<List<Dictionary<string, object>>> ListPostgresTablesAsync(NpgsqlConnection conn_postgresql)
