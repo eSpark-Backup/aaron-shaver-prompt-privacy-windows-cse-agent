@@ -20,6 +20,7 @@ using System.Xml.Linq;
 using Microsoft.Win32;
 using AgentApp;
 using System.Collections.Concurrent;
+//using AgentApp.Config;
 
 
 namespace eSpark_WindowsFIA
@@ -31,6 +32,13 @@ namespace eSpark_WindowsFIA
             InitializeComponent();
             timer1.Start();
             stopwatch.Reset();
+
+            fullPostGreTrafficLightImage = dbIntegrator_postgre.Properties.Resources.image;
+            StatusLightPostGre4 = pbPostGreDatabase1Status;
+
+            fullMSSQLTrafficLightImage = dbIntegrator_postgre.Properties.Resources.image;
+            StatusLightMsSQL = pbSQLDatabase1Status;
+            UpdateDatabaseStatusUI(false);
 
         }
 
@@ -50,22 +58,90 @@ namespace eSpark_WindowsFIA
         public static String Load = GetSetting("Secret_Key");
         public Agent agent = new Agent(uuid, type, SecretKey, TenantUUID);
         public static Stopwatch stopwatch = new Stopwatch();
+        public static bool exitPressed = false;
+
+        // This will hold the single full traffic light image (red, yellow, green)
+        private readonly Bitmap fullPostGreTrafficLightImage; // Made readonly
+        public PictureBox StatusLightPostGre4 { get; set; } // Reference to the PictureBox control for the status light image
+
+        private readonly Bitmap fullMSSQLTrafficLightImage; // Made readonly
+        public PictureBox StatusLightMsSQL { get; set; } // Reference to the PictureBox control for the status light image
 
 
+        // Updates the UI for a single database based on its simulated connection status.
+        private void UpdateDatabaseStatusUI(bool MarkOn)
+        {
+            // Define the sections for red and green lights based on the full image dimensions.
+            // The image 'image.png' is 512x512 pixels.
+            // It has three lights horizontally.
+            // We assume each light takes up approximately one-third of the image width.
+            int singleLightWidth = fullPostGreTrafficLightImage.Width / 3; // Approx 170 pixels
+            int singleLightHeight = fullPostGreTrafficLightImage.Height; // 512 pixels
+
+            // Rectangle for the red light (the first third of the image, from x=0)
+            Rectangle redLightSection = new Rectangle(0, 0, singleLightWidth, singleLightHeight);
+            // Rectangle for the green light (the last third of the image, from x = 2/3 of width)
+            Rectangle greenLightSection = new Rectangle(2 * singleLightWidth, 0, singleLightWidth, singleLightHeight);
+
+
+            if (MarkOn)
+            {
+                // If connected, crop the green light section and set it as the PictureBox image.
+                if (!Agent.databasetype.Contains("sqlserver"))//if (DatabaseConfig._credentials["DbType"].DbType.Contains("DBConnectionPostGreSQL"))
+                { StatusLightPostGre4.Image = CropImage(fullPostGreTrafficLightImage, greenLightSection); StatusLightMsSQL.Image = CropImage(fullPostGreTrafficLightImage, redLightSection); }
+                else { StatusLightMsSQL.Image = CropImage(fullMSSQLTrafficLightImage, greenLightSection); StatusLightPostGre4.Image = CropImage(fullMSSQLTrafficLightImage, redLightSection); }
+                // Set the status label text to "Connected".
+                //db.ConnectionStatusLabel.Text = "Connected";
+                //// Set the status label text color to green.
+                //db.ConnectionStatusLabel.ForeColor = Color.Green;
+            }
+            else
+            {
+                // If not connected, crop the red light section and set it as the PictureBox image.
+                if (!Agent.databasetype.Contains("sqlserver"))//if (DatabaseConfig._credentials["DbType"].DbType.Contains("DBConnectionPostGreSQL")) 
+                { StatusLightPostGre4.Image = CropImage(fullPostGreTrafficLightImage, redLightSection); StatusLightMsSQL.Image = CropImage(fullMSSQLTrafficLightImage, redLightSection); }
+                else { StatusLightMsSQL.Image = CropImage(fullMSSQLTrafficLightImage, redLightSection); StatusLightPostGre4.Image = CropImage(fullPostGreTrafficLightImage, redLightSection); }
+                // Set the status label text to "Not Connected".
+                //db.ConnectionStatusLabel.Text = "Not Connected";
+                //// Set the status label text color to red.
+                //db.ConnectionStatusLabel.ForeColor = Color.Red;
+            }
+        }
+
+        /// <summary>
+        /// Crops a specified section from a source Bitmap and returns it as a new Bitmap.
+        /// </summary>
+        /// <param name="source">The original Bitmap to crop from.</param>
+        /// <param name="section">The Rectangle defining the area to crop (x, y, width, height).</param>
+        /// <returns>A new Bitmap containing the cropped section.</returns>
+        private Bitmap CropImage(Bitmap source, Rectangle section)
+        {
+            // Create a new bitmap with the dimensions of the section to hold the cropped image.
+            Bitmap bmp = new Bitmap(section.Width, section.Height);
+            // Create a Graphics object from the new bitmap to draw on it.
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                // Draw the specified section of the source image onto the new bitmap.
+                // The destination rectangle (0, 0, section.Width, section.Height) means
+                // the cropped part will fill the new bitmap from its top-left corner.
+                g.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
+            }
+            return bmp;
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            if (e.CloseReason == CloseReason.UserClosing && !exitPressed)
             {
-                FSW_trayicon.Visible = true;
-                //e.Cancel = true;
+                CSE_dbIndexer_trayicon.Visible = true;
+                e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
                 this.Hide();
 
                 if (this.notifyIcon1 == null || this.notifyIcon1.Container == null)
                 {
                     this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-                    this.FSW_trayicon = new System.Windows.Forms.NotifyIcon(this.components);
+                    this.CSE_dbIndexer_trayicon = new System.Windows.Forms.NotifyIcon(this.components);
                     //this.notifyIcon1 = new NotifyIcon(); 
                 }
 
@@ -76,14 +152,14 @@ namespace eSpark_WindowsFIA
                 this.notifyIcon1.BalloonTipText = "Click to open the window again!";
                 //this.notifyIcon1.Click += new System.EventHandler(this.notifyIcon1_Click);
                 this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_Click);
-                this.notifyIcon1.ShowBalloonTip(100);
-                this.FSW_trayicon.Visible = false;
+                this.notifyIcon1.ShowBalloonTip(3000);
+                this.CSE_dbIndexer_trayicon.Visible = false;
             }
             else
             {
                 Program.loger.Log(LogLevel.Info, "==================Closing Windows File Logger===============" + DateTime.Now);
 
-                FSW_trayicon.Visible = false;
+                CSE_dbIndexer_trayicon.Visible = false;
 
                 NLog.LogManager.Shutdown(); // Flush and close down internal threads and timers
             }
@@ -95,7 +171,8 @@ namespace eSpark_WindowsFIA
             DialogResult dialogResult = MessageBox.Show("Do you really want to close this application?", "Please confirm before closing!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             if (dialogResult == DialogResult.Yes)
             {
-                FSW_trayicon.Visible = false;
+                CSE_dbIndexer_trayicon.Visible = false;
+                exitPressed = true;
                 this.Close();
             }
 
@@ -119,6 +196,7 @@ namespace eSpark_WindowsFIA
 
         private static String GetSetting(string key)
         {
+
             return ConfigurationManager.AppSettings[key];
         }
 
@@ -135,7 +213,7 @@ namespace eSpark_WindowsFIA
         }
         private void FSWopen_toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            FSW_trayicon.Visible = true;
+            CSE_dbIndexer_trayicon.Visible = true;
             this.Show();
             this.WindowState = FormWindowState.Normal;
         }
@@ -186,7 +264,7 @@ namespace eSpark_WindowsFIA
             this.notifyIcon1.Visible = false;
             this.Show();
             this.WindowState = FormWindowState.Normal;
-            this.FSW_trayicon.Visible = true;
+            this.CSE_dbIndexer_trayicon.Visible = true;
         }
 
         private void Form1_HelpButtonClicked(object sender, CancelEventArgs e)
@@ -204,6 +282,7 @@ namespace eSpark_WindowsFIA
         {
             txtCurrentStatus.Text += msg + Environment.NewLine;
             Program.loger.Log(LogLevel.Info, msg + DateTime.Now);
+            
         }
 
         private void LogToUI(string msg)
@@ -212,14 +291,24 @@ namespace eSpark_WindowsFIA
             {
                 if (InvokeRequired)
                 {
-                    Invoke(new Action(() => updateUserMsg(">> " + msg)));
+                    Invoke(new Action(() => updateUserMsg(DateTime.Now+">> " + msg)));
                 }
                 else
                 {
-                    txtCurrentStatus.Text += ">> " + msg + Environment.NewLine;
+                    txtCurrentStatus.Text += DateTime.Now + ">> " + msg + Environment.NewLine;
                     Program.loger.Log(LogLevel.Info, msg + DateTime.Now);
                 }
-            }catch (Exception ex){ MessageBox.Show("Please give user permissions for saving application Logs!", "Error while saving Logs!", MessageBoxButtons.OK,MessageBoxIcon.Warning); }
+
+                if (Agent.databasetype == null || Agent.databasetype.Length < 1)
+                    return;
+
+                if (Program.isConnected)
+                    UpdateDatabaseStatusUI(true);
+                else //if (msg.Contains("DisConnected"))
+                    UpdateDatabaseStatusUI(false);
+
+            }
+            catch (Exception ex){ MessageBox.Show("Please give user permissions for saving application Logs!", "Error while saving Logs!", MessageBoxButtons.OK,MessageBoxIcon.Warning); }
 }
 
         private async void btnConnectCSE_Click(object sender, EventArgs e)
@@ -264,7 +353,7 @@ namespace eSpark_WindowsFIA
                 agents[uuid] = agent;
             }
 
-            try { await agent.CloseStartAsync(); } catch { }
+            try { await agent.CloseStartAsync(); UpdateDatabaseStatusUI(false); } catch { }
 
             Program.isConnected = false;
             Program.isQueryRunning = false;

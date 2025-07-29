@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
   <Product Name='PromptPrivacy DBIndexer Postgre' Id='82fb98a6-f47f-4476-baaa-799fd3c7975f' UpgradeCode='82fb98a6-f47f-4476-baaa-799fd3c7975f'
-    Language='1033' Codepage='1252' Version='1.0.20.1' Manufacturer='eSpark Consulting Group'>
+    Language='1033' Codepage='1252' Version='1.0.20.2' Manufacturer='eSpark Consulting Group'>
 
     <Package InstallPrivileges='elevated' Id='*' Keywords='Installer' Description="eSpark PromptPrivDBindexerPostgre Installer"
       Comments='PromptPrivacy DBIndexer Postgre is a registered trademark of eSpark Consulting Solutions.' Manufacturer='eSpark_consulting '
@@ -32,9 +32,45 @@
 				  <File Id='x86SQLite.Interop.dll' Name='SQLite.Interop.dll' DiskId='1' Source='x86\SQLite.Interop.dll'/>
               </Component>
             </Directory>
+			  
+			  <Directory Id='runtimes' Name='runtimes'>
+				  <Directory Id='win' Name='win'>
+					  <Directory Id='lib' Name='lib'>
+						  <Directory Id='net6.0' Name='net6.0'>
+				            <Component Id='runtimesdirectory' Guid='82fb98a6-f47f-4476-baaa-778fd3c8975f'>
+					            <File Id='System.Data.Odbc.dll' Name='System.Data.Odbc.dll' DiskId='1' Source='runtimes\win\lib\net6.0\System.Data.Odbc.dll'/>
+								<File Id='System.Data.SqlClient.dll' Name='System.Data.SqlClient.dll' DiskId='1' Source='runtimes\win\lib\net6.0\System.Data.SqlClient.dll'/>
+								<File Id='System.Text.Encoding.CodePages.dll' Name='System.Text.Encoding.CodePages.dll' DiskId='1' Source='runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll'/>
+				            </Component>
+				          </Directory>
+				      </Directory>
+			    </Directory>
+				  <Directory Id='winx86' Name='win-x86'>
+					  <Directory Id='nativewinx86' Name='native'>
+							  <Component Id='runtimesdirectorywinx86' Guid='82fb98a6-f47f-4476-baaa-779fd3c8975f'>
+								  <File Id='sni.dll_winx86' Name='sni.dll' DiskId='1' Source='runtimes\win-x86\native\sni.dll'/>
+							  </Component>
+					  </Directory>
+				  </Directory>
+				  <Directory Id='winx64' Name='win-x64'>
+					  <Directory Id='nativewinx64' Name='native'>
+						  <Component Id='runtimesdirectorywinx64' Guid='82fb98a6-f47f-4476-baaa-789fd3c8975f'>
+							  <File Id='sni.dll_winx64' Name='sni.dll' DiskId='1' Source='runtimes\win-x64\native\sni.dll'/>
+						  </Component>
+					  </Directory>
+				  </Directory>
+				  <Directory Id='winarm64' Name='win-arm64'>
+					  <Directory Id='nativewinarm64' Name='native'>
+						  <Component Id='runtimesdirectorywinarm64' Guid='82fb98a6-f47f-4476-baaa-788fd3c8975f'>
+							  <File Id='sni.dll_winarm64' Name='sni.dll' DiskId='1' Source='runtimes\win-arm64\native\sni.dll'/>
+						  </Component>
+					  </Directory>
+				  </Directory>
+
+			  </Directory>
 
 
-            <Component Id='MainExecutable' Guid='82fb98a6-f47f-4476-baaa-799fd3c7975f'>
+			  <Component Id='MainExecutable' Guid='82fb98a6-f47f-4476-baaa-799fd3c7975f'>
             <File Id='PromptPrivacy_PostgreDBIntegratorWindows.exe' Name='PromptPrivacy_PostgreDBIntegratorWindows.exe' DiskId='1' Source='PromptPrivacy_PostgreDBIntegratorWindows.exe' KeyPath='yes'>
 				<Shortcut Advertise="yes"
 							Id="desktopSc"
@@ -61,6 +97,7 @@
 				<File Id='System.Text.Encodings.Web.dll' Name='System.Text.Encodings.Web.dll' DiskId='1' Source='System.Text.Encodings.Web.dll'/>
 				<File Id='System.Text.Json.dll' Name='System.Text.Json.dll' DiskId='1' Source='System.Text.Json.dll'/>
 				<File Id='MetroSetUI.dll' Name='MetroSet UI.dll' DiskId='1' Source='MetroSet UI.dll'/>
+				<File Id='WinRT.Runtime.dll' Name='WinRT.Runtime.dll' DiskId='1' Source='WinRT.Runtime.dll'/>
 				
 			</Component>
 
@@ -90,6 +127,10 @@
       <ComponentRef Id='x86directory' />
       <ComponentRef Id='x64directory' />
       <ComponentRef Id='Resourcesdirectory' />
+	  <ComponentRef Id='runtimesdirectory' />
+	  <ComponentRef Id='runtimesdirectorywinx86' />
+	  <ComponentRef Id='runtimesdirectorywinx64' />
+	  <ComponentRef Id='runtimesdirectorywinarm64' />
       
     </Feature>
 

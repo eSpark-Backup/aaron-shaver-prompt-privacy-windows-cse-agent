@@ -1,8 +1,9 @@
-﻿using AgentApp.Config;
+﻿//using AgentApp.Config;
 using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -47,16 +48,26 @@ namespace AgentApp
         //    _connectionString = connectionString;
         //}
 
-        public static async Task<object> GetMetadataAsync(string databaseName)
+        private static String GetSetting(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
+
+        public static async Task<object> GetMetadataAsync()
         {
             // Example: return list of schemas
             //                SELECT pg_database_size(datname) AS database_size_in_bytes, current_database() AS database_name FROM pg_database WHERE datname = $1; ,self.credentials["database"],
 
-            var dbCredentials = DatabaseConfig.GetCredentials(databaseName);
-            await using var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
+            //var dbCredentials = DatabaseConfig.GetCredentials(databaseName);//ConfigurationManager.ConnectionStrings[GetSetting("DbTypeSQLexp")]
+            //ConfigurationManager.ConnectionStrings["DBConnectionPostGreSQL"].ConnectionString
+            await using var conn_postgresql = new NpgsqlConnection(ConfigurationManager.ConnectionStrings[GetSetting("DbTypePostGre")].ConnectionString);
             await conn_postgresql.OpenAsync();
 
-            using var cmd = new NpgsqlCommand("SELECT pg_database_size(datname) AS db_size, current_database() AS database_name,'postgresql' as database_type  FROM pg_database WHERE datname = current_database();", conn_postgresql);
+            //using var cmd = new NpgsqlCommand("SELECT pg_database_size(datname) AS db_size, current_database() AS database_name,'postgresql' as database_type  FROM pg_database WHERE datname = current_database();", conn_postgresql);
+            using var cmd = new NpgsqlCommand("SELECT pg_database_size(datname) AS db_size, current_database() AS database_name," +
+                                            " (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema NOT IN('information_schema', 'pg_catalog') ) AS table_count," +
+                                            " (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema NOT IN('information_schema', 'pg_catalog') ) AS column_count, "+
+                                            " 'postgresql' as database_type FROM pg_database WHERE datname = current_database(); ", conn_postgresql);
             using var reader = await cmd.ExecuteReaderAsync();
             var result = new Dictionary<string, object>();// List<string>();
             //String result = "";
@@ -68,8 +79,11 @@ namespace AgentApp
             {
                 //result.Add("database_size_in_bytes:"+reader.GetValue(0).ToString()+"L");//ALERT>>Here "L" added due to c# not understand bigint
                 result.Add("database_name", reader.GetValue(1));
-                result.Add("database_type", reader.GetValue(2));
+                result.Add("database_type", "postgresql");// dbCredentials.DbType);
                 result.Add("db_size", reader.GetValue(0));
+                result.Add("table_count", reader.GetValue(2));
+                result.Add("column_count", reader.GetValue(3));
+
                 //dataTable.Load(reader);
 
                 //result = @"""db_size"":" + reader.GetValue(0).ToString() + 
@@ -88,10 +102,10 @@ namespace AgentApp
         }
 
         //public static async Task<List<TableInfo>> GetTablesFullInfoAsync()
-        public static async Task<object> GetTablesFullInfoAsync(string databaseName)
+        public static async Task<object> GetTablesFullInfoAsync()
         {
-            var dbCredentials = DatabaseConfig.GetCredentials(databaseName);
-            await using var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
+            //var dbCredentials = DatabaseConfig.GetCredentials(databaseName);
+            await using var conn_postgresql = new NpgsqlConnection(ConfigurationManager.ConnectionStrings[GetSetting("DbTypePostGre")].ConnectionString);// dbCredentials.ConnectionString);
             await conn_postgresql.OpenAsync();
 
             var table_nameList = new List<TableInfo>();
@@ -496,10 +510,10 @@ namespace AgentApp
             return JsonConvert.SerializeObject(result);
         }
 
-        public static async Task<object> ExecuteQueryAsync(string databaseName, string query)//NpgsqlConnection conn, string query)
+        public static async Task<object> ExecuteQueryAsync(string query)//NpgsqlConnection conn, string query)
         {
-            var dbCredentials = DatabaseConfig.GetCredentials(databaseName);
-            await using var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
+            //var dbCredentials = DatabaseConfig.GetCredentials(databaseName);
+            await using var conn_postgresql = new NpgsqlConnection(ConfigurationManager.ConnectionStrings[GetSetting("DbTypePostGre")].ConnectionString);// dbCredentials.ConnectionString);
             await conn_postgresql.OpenAsync();
 
             using var cmd = new NpgsqlCommand(query, conn_postgresql);

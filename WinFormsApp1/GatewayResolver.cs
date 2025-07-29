@@ -36,6 +36,7 @@ namespace AgentApp
             //AgentApp.Agent.OnLog?.Invoke($"Connected:");
 
             return doc.RootElement.GetProperty("gateway_ip_port").GetString();
+            //return "34.9.75.135:443";
         }
 
         private static String GetSetting(string key)

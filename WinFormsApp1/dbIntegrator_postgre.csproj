@@ -2,19 +2,19 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     
     <StartupObject>AgentApp.Program</StartupObject>
     
-    <PackageIcon>logop256.ico</PackageIcon>
+    <PackageIcon>dbIntegrator.png</PackageIcon>
     
     <AssemblyVersion>1.0.20.2</AssemblyVersion>
     
     <AssemblyName>PromptPrivacy_PostgreDBIntegratorWindows</AssemblyName>
     
-    <ApplicationIcon>bin\Debug\net6.0-windows\Resources\logop256.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\logop256.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,33 +24,30 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Form1.cs" />
-    <Compile Remove="Form1.Designer.cs" />
+    <Compile Remove="DatabaseConfig.cs" />
     <Compile Remove="Form1OLD.cs" />
     <Compile Remove="Form1OLD.Designer.cs" />
+    <Compile Remove="Form21.cs" />
+    <Compile Remove="Form21.Designer.cs" />
     <Compile Remove="Logger.cs" />
     <Compile Remove="PostgresHelper_old.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="Form1.resx" />
     <EmbeddedResource Remove="Form1OLD.resx" />
+    <EmbeddedResource Remove="Form21.resx" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="bin\Debug\net6.0-windows\Resources\logop256.ico" />
+    <Content Include="Resources\logop256.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="bin\Debug\net6.0-windows\Resources\logop256.ico">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="9.0.3" />
+    <PackageReference Include="System.Data.Odbc" Version="8.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,7 +55,7 @@
       <HintPath>..\..\..\..\..\GitHub\eSpark-Consultants\src\aaronshaver-windowsagent\eSpark_WindowsFIA\bin\MetroSet UI.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>bin\Debug\net6.0-windows\NLog.dll</HintPath>
+      <HintPath>bin\Debug\net6.0-windows8.0\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite">
       <HintPath>obj\Debug\System.Data.SQLite.dll</HintPath>
@@ -84,6 +81,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\dbIntegrator.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net6.0-windows\Resources\" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Windows.Forms;
 using Npgsql;
-using AgentApp.Config;
+//using AgentApp.Config;
 using System.Security.Policy;
 using Newtonsoft.Json;
 using System.Text.Json.Nodes;
@@ -17,6 +17,7 @@ using NLog;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 
 namespace AgentApp
 {
@@ -29,6 +30,21 @@ namespace AgentApp
 
         public Agent(string uuid, string type,string Secret_Key,string Tenant_UUID)
         {
+
+        //< add key = "Agent_uuid_SQL" value = "e3e9903c-999f-4a09-9f2f-30cb72a293e7" />
+
+        //< add key = "Secret_key_SQL" value = "fda73b05aba822d1d687449ebdb9c771a1fe93565abfcb09c6adb55894bcc506" />
+
+        //< add key = "Tenant_uuid_SQL" value = "e115fb59-060d-489d-aa08-7a741fe1d664" />
+
+        //< add key = "Agent_uuid_PostGres" value = "6dcbd2d4-0f34-4bc9-a482-17a8c7b45f4f" />
+
+        //< add key = "Secret_key_PostGres" value = "eba417b590de16d722c3d0ccbc5ac9ef952df26528a6f2903a2af74d6cce27b1" />
+
+        //< add key = "Tenant_uuid_PostGres" value = "e115fb59-060d-489d-aa08-7a741fe1d664" />
+
+
+
             //{
             //"database_type": "postgres",
             //"secret_key": "eba417b590de16d722c3d0ccbc5ac9ef952df26528a6f2903a2af74d6cce27b1",
@@ -85,6 +101,7 @@ namespace AgentApp
                 try
                 {
                     await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", _cts.Token);
+                    await _socket.CloseAsync(WebSocketCloseStatus.Empty, "Closing", _cts.Token);
                 }
                 catch { }
                 OnLog?.Invoke($"Connection Closed reason: User Cancelled");
@@ -249,6 +266,7 @@ namespace AgentApp
             await SendAsync(json);
         }
 
+        public static string databasetype = "";
         private async Task SendDatabaseResponseAsync(JsonElement original)
         {
             //var response = new
@@ -343,14 +361,18 @@ namespace AgentApp
                     return;
                 }
 
+                string databaseName = "";//postgresql or sqlserver
+                try { databaseName = payload.GetProperty("database_name").GetString(); } catch { }
 
+                
+                try{databasetype = payload.GetProperty("database_type").GetString();
 
-                //string databasetype = payload.GetProperty("database_type").GetString();
+                    //await SendErrorAsync("Connected successcylly to "+ databasetype+" server!", "database_indexer");
+                    OnLog?.Invoke("Connected successfully to " + databasetype + " server!");
+                    Program.mainForm.Refresh();
+                }
+                catch { databasetype = databaseName; }
 
-
-
-
-                string databaseName = payload.GetProperty("database_name").GetString();
                 if (string.IsNullOrEmpty(databaseName))
                 {
                     await SendErrorAsync("database_name is required.", "database_indexer");
@@ -370,14 +392,14 @@ namespace AgentApp
 
                 // Lookup database credentials (replace with your real config source)
                 //var dbCredentials = DatabaseConfig.GetCredentials(databaseName);
-                var dbCredentials = DatabaseConfig.GetCredentials("Database");
-                if (dbCredentials == null)
-                {
-                    await SendErrorAsync($"db_credentials not found for {databaseName}", "database_indexer");
-                    Program.loger.Log(LogLevel.Info, "================== Payload db_credentials not found for databaseName ===============" + databaseName);
-                    OnLog?.Invoke($"Missing dbcredentials: {dbCredentials}");
-                    return;
-                }
+                //var dbCredentials = DatabaseConfig.GetCredentials("Database");
+                //if (dbCredentials == null)
+                //{
+                //    await SendErrorAsync($"db_credentials not found for {databaseName}", "database_indexer");
+                //    Program.loger.Log(LogLevel.Info, "================== Payload db_credentials not found for databaseName ===============" + databaseName);
+                //    OnLog?.Invoke($"Missing dbcredentials: {dbCredentials}");
+                //    return;
+                //}
 
                 //if (dbCredentials.DbType != "sqlite")//postgresql
                 //{
@@ -395,7 +417,21 @@ namespace AgentApp
                     //if (databasetype == "postgresql")
                     //{              
                     //var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
-                    result = await PostgresHelper.GetMetadataAsync(databaseName);
+                    if (databasetype == "sqlserver")
+                    {
+                        //if (DatabaseConfig._credentials["DbType"].DbType.Contains("DBConnectionSQLodbc")) //DatabaseCredentials.AlternateConn)
+                        if(GetSetting("DbTypeSQLSelected")== "DbTypeSQLodbc")
+                        {
+                            AsyncODBCSQLServerDatabas asyncSQLServerDatabase = new AsyncODBCSQLServerDatabas();
+                            result = await asyncSQLServerDatabase.GetMetadataAsync();
+                        }
+                        else {
+                            AsyncSqlConnectionSQLServerDatabase asyncSQLServerDatabase = new AsyncSqlConnectionSQLServerDatabase();
+                            result = await asyncSQLServerDatabase.GetMetadataAsync();
+                        }
+                    }
+                    else if (databasetype == "postgresql")
+                        result = await PostgresHelper.GetMetadataAsync();
                     //Json_result = (JObject)JsonConvert.DeserializeObject(result.ToString());
                     
                     Program.loger.Log(LogLevel.Info, "================== Payload get-database-metadata ===============" + result);
@@ -412,8 +448,24 @@ namespace AgentApp
                     //result = await PostgresHelper.GetTablesDetailsAsync(conn);
                     //if (databasetype == "postgresql")
                     //{
-                        //var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
-                    result = await PostgresHelper.GetTablesFullInfoAsync(databaseName);
+                    //var conn_postgresql = new NpgsqlConnection(dbCredentials.ConnectionString);
+                    if (databasetype == "sqlserver")
+                    {
+                        //if (DatabaseCredentials.AlternateConn)
+                        //if (DatabaseConfig._credentials["DbType"].DbType.Contains("DBConnectionSQLodbc")) //DatabaseCredentials.AlternateConn)
+                        if (GetSetting("DbTypeSQLSelected") == "DbTypeSQLodbc")
+                        {
+                            AsyncODBCSQLServerDatabas asyncSQLServerDatabase = new AsyncODBCSQLServerDatabas();
+                            result = await asyncSQLServerDatabase.GetTableDetailsAsync();
+                        }
+                        else
+                        {
+                            AsyncSqlConnectionSQLServerDatabase asyncSQLServerDatabase = new AsyncSqlConnectionSQLServerDatabase();
+                            result = await asyncSQLServerDatabase.GetTableDetailsAsync();
+                        }
+                    }
+                    else if (databasetype == "postgresql")
+                        result = await PostgresHelper.GetTablesFullInfoAsync();
                     //object resulttmp = result;
 
                     //Regex regex = new Regex("\"table_name\":\"\\w*\",");
@@ -478,7 +530,25 @@ namespace AgentApp
                     }
                     //if (databasetype == "postgresql")
                     //{
-                        result = await PostgresHelper.ExecuteQueryAsync(databaseName, query);
+                    if (databasetype == "sqlserver")
+                    {
+                        //if (DatabaseCredentials.AlternateConn)
+                        //if (DatabaseConfig._credentials["DbType"].DbType.Contains("DBConnectionSQLodbc")) //DatabaseCredentials.AlternateConn)
+                        if (GetSetting("DbTypeSQLSelected") == "DbTypeSQLodbc")
+                        {
+                            AsyncODBCSQLServerDatabas asyncSQLServerDatabase = new AsyncODBCSQLServerDatabas();
+                            result = await asyncSQLServerDatabase.ExecuteQueryAsync(query);
+                        }
+                        else
+                        {
+
+                            AsyncSqlConnectionSQLServerDatabase asyncSQLServerDatabase = new AsyncSqlConnectionSQLServerDatabase();
+                            result = await asyncSQLServerDatabase.ExecuteQueryAsync(query);
+
+                        }
+                    }
+                    else if (databasetype == "postgresql")
+                        result = await PostgresHelper.ExecuteQueryAsync(query);
                         Program.loger.Log(LogLevel.Info, "================== Payload perform-query-execution ===============" + result);
                         OnLog?.Invoke($"Parsed Payload perform-query-execution  : {result}");
 
@@ -563,6 +633,10 @@ namespace AgentApp
             }
 
 
+        }
+        private String GetSetting(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
         }
 
         public static string ReplaceLastOccurrence(string source, string find, string replace)

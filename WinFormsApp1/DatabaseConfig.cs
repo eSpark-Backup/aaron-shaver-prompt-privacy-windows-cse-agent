@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AgentApp.Config
 {
     public class DatabaseCredentials
     {
+        //public string SQLDriver { get; set; }
         public string DbType { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
@@ -20,14 +23,23 @@ namespace AgentApp.Config
         public string Username { get; set; }
         public string Password { get; set; }
         public string LoadBalancerUrl { get; set; }
+        //public static bool AlternateConn { get; set; }
+
+        private static String GetSetting(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
 
         public string ConnectionString
-        {
+        {//https://www.connectionstrings.com/sql-server/
             get
             {
                 if (DbType == "postgresql" || DbType == "postgresql")
                 {
                     return $"Host={Host};Port={Port};Username={Username};Password={Password};Database={Database};Pooling=true;";
+                    //return @"Driver={ODBC Driver 17 for SQL Server};Server=MASB\SQLEXPRESS;Database=PSVAT5;Trusted_Connection=Yes;";
+                    //return @"Driver={ODBC Driver 17 for SQL Server};Server=MASB\SQLEXPRESS;Database=PSVAT5;Uid=postgres;Pwd=1122;";
+                    //return @"Driver={ODBC Driver 17 for SQL Server};Server={Host}\SQLEXPRESS;Database={Database};Trusted_Connection=Yes; providerName=System.Data.Odbc";
                 }
                 //else if (DbType == "sqlite")
                 //{
@@ -37,10 +49,31 @@ namespace AgentApp.Config
                 //{
                 //    return $"Host={Host};Port={Port};Username={Username};Password={Password};Database={Database};Pooling=true;";
                 //}
-                //else if (DbType == "mssql")
-                //{
-                //    return $"Host={Host};Port={Port};Username={Username};Password={Password};Database={Database};Pooling=true;";
-                //}
+                else if (DbType == "sqlserver")
+                {
+                    //return $"Host={Host};Port={Port};Username={Username};Password={Password};Database={Database};Pooling=true;";
+
+                    //if (AlternateConn)
+                    if (DatabaseConfig._credentials["DbType"].DbType.Contains("DBConnectionSQLodbc")) //DatabaseCredentials.AlternateConn)
+                        //conn.ConnectionString = "Data Source=ServerName;Initial Catalog=DataBaseName;User id=UserName;Password=Secret;";
+                        //$"Data Source=={Host};Initial Catalog={Database};Uid={Username};Pwd={Password};";
+                        //Driver={ODBC Driver 17 for SQL Server};Server=.\SQLExpress;AttachDBFileName=c:\dir\\mydb.mdf;Database=dbName;Trusted_Connection=yes;
+                        //Server=.\SQLExpress;Database=PSVAT5;User Id=postgres;Password=1122;Trusted_Connection=Yes;
+
+                        //return "Server={Host};Database ={Database};User Id={Username};Password={Password};";
+                        return ConfigurationManager.ConnectionStrings[GetSetting("DbTypeSQLodbc")].ConnectionString;
+
+                    else//Driver={ODBC Driver 17 for SQL Server};Server=myServerAddress;Database=myDataBase;UID=myUsername;PWD=myPassword;
+                        //return @"Server =.\SQLExpress;Integrated Security=SSPI;Database =PSVAT5; User Id=postgres; Password = 1122; Trusted_Connection = Yes;Initial Catalog=PSVAT5;";
+                        //return @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=PSVAT5;Integrated Security=SSPI;UID=postgres;PWD=1122;TrustServerCertificate=true;";
+                        //return $"Driver={SQLDriver};Server={Host},{Port};Database={Database};Uid={Username};Pwd={Password};";
+                        //return @"Data Source =.\\SQLExpress; Integrated Security = true;User Instance = true; Initial Catalog = PSVAT5;UID=postgres;PWD=1122;TrustServerCertificate=true;";
+                        //return @"Server=MASB\SQLEXPRESS;Database=PSVAT5;Trusted_Connection=True;";
+                        //return @"Driver={ODBC Driver 17 for SQL Server};Server={Host}\SQLEXPRESS;Database={Database};Trusted_Connection=Yes;";
+                                return ConfigurationManager.ConnectionStrings[GetSetting("DbTypeSQLexp")].ConnectionString;
+                    
+
+                }
                 //else if (DbType == "oracle")
                 //{
                 //    return $"Host={Host};Port={Port};Username={Username};Password={Password};Database={Database};Pooling=true;";
@@ -53,7 +86,7 @@ namespace AgentApp.Config
 
     public static class DatabaseConfig
     {
-        private static Dictionary<string, DatabaseCredentials> _credentials;
+        public static Dictionary<string, DatabaseCredentials> _credentials;
 
         static DatabaseConfig()
         {
@@ -72,22 +105,24 @@ namespace AgentApp.Config
                 //_credentials = JsonSerializer.Deserialize<Dictionary<string, DatabaseCredentials>>(json);
                 DatabaseCredentials dbcreds = new DatabaseCredentials();
                 _credentials = new Dictionary<string, DatabaseCredentials>();
+                //try { DatabaseCredentials.AlternateConn = bool.Parse(GetSetting("AlternateConn")); } catch { DatabaseCredentials.AlternateConn = false; }
                 dbcreds.DbType = GetSetting("DbType");
-                dbcreds.Host = GetSetting("Host");
-                dbcreds.Port = int.Parse(GetSetting("Port"));
-                dbcreds.Database = GetSetting("Database");
-                dbcreds.DbType = GetSetting("DbType");
-                dbcreds.Username = GetSetting("Username");
-                dbcreds.Password = GetSetting("Password");
+                //dbcreds.Host = GetSetting("Host");
+                //dbcreds.Port = int.Parse(GetSetting("Port"));
+                //dbcreds.Database = GetSetting("Database");
+                //dbcreds.DbType = GetSetting("DbType");
+                //dbcreds.Username = GetSetting("Username");
+                //dbcreds.Password = GetSetting("Password");
                 dbcreds.LoadBalancerUrl = GetSetting("LoadBalancerUrl");
-                 
 
+
+                //_credentials.Add("AlternateConn", dbcreds); 
                 _credentials.Add("DbType", dbcreds);
-                _credentials.Add("Host", dbcreds);
-                _credentials.Add("Port", dbcreds);
-                _credentials.Add("Database", dbcreds);                
-                _credentials.Add("Username", dbcreds);
-                _credentials.Add("Password", dbcreds);
+                //_credentials.Add("Host", dbcreds);
+                //_credentials.Add("Port", dbcreds);
+                //_credentials.Add("Database", dbcreds);                
+                //_credentials.Add("Username", dbcreds);
+                //_credentials.Add("Password", dbcreds);
 
 
             }

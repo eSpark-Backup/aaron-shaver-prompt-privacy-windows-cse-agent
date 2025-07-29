@@ -42,24 +42,22 @@ namespace AgentApp
             metroSetLabel1 = new MetroSet_UI.Controls.MetroSetLabel();
             txtAgentUUID = new MetroSet_UI.Controls.MetroSetTextBox();
             panel2 = new System.Windows.Forms.Panel();
-            metroSetLabel7 = new MetroSet_UI.Controls.MetroSetLabel();
-            txtPassword = new MetroSet_UI.Controls.MetroSetTextBox();
-            metroSetLabel8 = new MetroSet_UI.Controls.MetroSetLabel();
-            txtUsername = new MetroSet_UI.Controls.MetroSetTextBox();
-            metroSetLabel9 = new MetroSet_UI.Controls.MetroSetLabel();
-            txtDatabase = new MetroSet_UI.Controls.MetroSetTextBox();
-            metroSetLabel4 = new MetroSet_UI.Controls.MetroSetLabel();
-            txtPort = new MetroSet_UI.Controls.MetroSetTextBox();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            radioButton2 = new System.Windows.Forms.RadioButton();
+            radioButton1 = new System.Windows.Forms.RadioButton();
+            cmbDbTypesSQLODBC = new MetroSet_UI.Controls.MetroSetComboBox();
             metroSetLabel5 = new MetroSet_UI.Controls.MetroSetLabel();
-            txtHost = new MetroSet_UI.Controls.MetroSetTextBox();
+            cmbDbTypesPostgre = new MetroSet_UI.Controls.MetroSetComboBox();
+            metroSetLabel4 = new MetroSet_UI.Controls.MetroSetLabel();
+            cmbDbTypesSQLexp = new MetroSet_UI.Controls.MetroSetComboBox();
             metroSetLabel6 = new MetroSet_UI.Controls.MetroSetLabel();
-            txtDbType = new MetroSet_UI.Controls.MetroSetTextBox();
             chkQuartzJobs = new MetroSet_UI.Controls.MetroSetSwitch();
             folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             metroSetControlBox1 = new MetroSet_UI.Controls.MetroSetControlBox();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // btnNewJob
@@ -137,6 +135,7 @@ namespace AgentApp
             metroSetLabel10.Text = "Load Balancer URL";
             metroSetLabel10.ThemeAuthor = "Narwin";
             metroSetLabel10.ThemeName = "MetroLite";
+            metroSetLabel10.Visible = false;
             // 
             // txtLoadBalancerUrl
             // 
@@ -160,11 +159,12 @@ namespace AgentApp
             txtLoadBalancerUrl.Size = new System.Drawing.Size(297, 27);
             txtLoadBalancerUrl.Style = MetroSet_UI.Enums.Style.Light;
             txtLoadBalancerUrl.StyleManager = null;
-            txtLoadBalancerUrl.TabIndex = 45;
+            txtLoadBalancerUrl.TabIndex = 4;
             txtLoadBalancerUrl.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             txtLoadBalancerUrl.ThemeAuthor = "Narwin";
             txtLoadBalancerUrl.ThemeName = "MetroLite";
             txtLoadBalancerUrl.UseSystemPasswordChar = false;
+            txtLoadBalancerUrl.Visible = false;
             txtLoadBalancerUrl.WatermarkText = "";
             // 
             // metroSetLabel3
@@ -301,242 +301,165 @@ namespace AgentApp
             // 
             // panel2
             // 
-            panel2.Controls.Add(metroSetLabel7);
-            panel2.Controls.Add(txtPassword);
-            panel2.Controls.Add(metroSetLabel8);
-            panel2.Controls.Add(txtUsername);
-            panel2.Controls.Add(metroSetLabel9);
-            panel2.Controls.Add(txtDatabase);
-            panel2.Controls.Add(metroSetLabel4);
-            panel2.Controls.Add(txtPort);
+            panel2.Controls.Add(groupBox1);
+            panel2.Controls.Add(cmbDbTypesSQLODBC);
             panel2.Controls.Add(metroSetLabel5);
-            panel2.Controls.Add(txtHost);
+            panel2.Controls.Add(cmbDbTypesPostgre);
+            panel2.Controls.Add(metroSetLabel4);
+            panel2.Controls.Add(cmbDbTypesSQLexp);
             panel2.Controls.Add(metroSetLabel6);
-            panel2.Controls.Add(txtDbType);
             panel2.Location = new System.Drawing.Point(17, 176);
             panel2.Name = "panel2";
             panel2.Size = new System.Drawing.Size(440, 213);
             panel2.TabIndex = 66;
             // 
-            // metroSetLabel7
+            // groupBox1
             // 
-            metroSetLabel7.AutoSize = true;
-            metroSetLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            metroSetLabel7.IsDerivedStyle = true;
-            metroSetLabel7.Location = new System.Drawing.Point(5, 176);
-            metroSetLabel7.Name = "metroSetLabel7";
-            metroSetLabel7.Size = new System.Drawing.Size(69, 17);
-            metroSetLabel7.Style = MetroSet_UI.Enums.Style.Light;
-            metroSetLabel7.StyleManager = null;
-            metroSetLabel7.TabIndex = 68;
-            metroSetLabel7.Text = "Password";
-            metroSetLabel7.ThemeAuthor = "Narwin";
-            metroSetLabel7.ThemeName = "MetroLite";
+            groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(radioButton1);
+            groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            groupBox1.Location = new System.Drawing.Point(402, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(35, 64);
+            groupBox1.TabIndex = 76;
+            groupBox1.TabStop = false;
             // 
-            // txtPassword
+            // radioButton2
             // 
-            txtPassword.AutoCompleteCustomSource = null;
-            txtPassword.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            txtPassword.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            txtPassword.BorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtPassword.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
-            txtPassword.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtPassword.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
-            txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txtPassword.HoverColor = System.Drawing.Color.FromArgb(102, 102, 102);
-            txtPassword.Image = null;
-            txtPassword.IsDerivedStyle = true;
-            txtPassword.Lines = null;
-            txtPassword.Location = new System.Drawing.Point(135, 176);
-            txtPassword.MaxLength = 100;
-            txtPassword.Multiline = false;
-            txtPassword.Name = "txtPassword";
-            txtPassword.ReadOnly = false;
-            txtPassword.Size = new System.Drawing.Size(297, 27);
-            txtPassword.Style = MetroSet_UI.Enums.Style.Light;
-            txtPassword.StyleManager = null;
-            txtPassword.TabIndex = 9;
-            txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            txtPassword.ThemeAuthor = "Narwin";
-            txtPassword.ThemeName = "MetroLite";
-            txtPassword.UseSystemPasswordChar = false;
-            txtPassword.WatermarkText = "";
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new System.Drawing.Point(0, 36);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new System.Drawing.Size(33, 24);
+            radioButton2.TabIndex = 8;
+            radioButton2.TabStop = true;
+            radioButton2.Text = ".";
+            radioButton2.UseVisualStyleBackColor = true;
             // 
-            // metroSetLabel8
+            // radioButton1
             // 
-            metroSetLabel8.AutoSize = true;
-            metroSetLabel8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            metroSetLabel8.IsDerivedStyle = true;
-            metroSetLabel8.Location = new System.Drawing.Point(5, 143);
-            metroSetLabel8.Name = "metroSetLabel8";
-            metroSetLabel8.Size = new System.Drawing.Size(79, 17);
-            metroSetLabel8.Style = MetroSet_UI.Enums.Style.Light;
-            metroSetLabel8.StyleManager = null;
-            metroSetLabel8.TabIndex = 66;
-            metroSetLabel8.Text = "User Name";
-            metroSetLabel8.ThemeAuthor = "Narwin";
-            metroSetLabel8.ThemeName = "MetroLite";
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new System.Drawing.Point(0, 6);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new System.Drawing.Size(33, 24);
+            radioButton1.TabIndex = 7;
+            radioButton1.TabStop = true;
+            radioButton1.Text = ".";
+            radioButton1.UseVisualStyleBackColor = true;
             // 
-            // txtUsername
+            // cmbDbTypesSQLODBC
             // 
-            txtUsername.AutoCompleteCustomSource = null;
-            txtUsername.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            txtUsername.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            txtUsername.BorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtUsername.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
-            txtUsername.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtUsername.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
-            txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txtUsername.HoverColor = System.Drawing.Color.FromArgb(102, 102, 102);
-            txtUsername.Image = null;
-            txtUsername.IsDerivedStyle = true;
-            txtUsername.Lines = null;
-            txtUsername.Location = new System.Drawing.Point(135, 143);
-            txtUsername.MaxLength = 100;
-            txtUsername.Multiline = false;
-            txtUsername.Name = "txtUsername";
-            txtUsername.ReadOnly = false;
-            txtUsername.Size = new System.Drawing.Size(297, 27);
-            txtUsername.Style = MetroSet_UI.Enums.Style.Light;
-            txtUsername.StyleManager = null;
-            txtUsername.TabIndex = 8;
-            txtUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            txtUsername.ThemeAuthor = "Narwin";
-            txtUsername.ThemeName = "MetroLite";
-            txtUsername.UseSystemPasswordChar = false;
-            txtUsername.WatermarkText = "";
-            // 
-            // metroSetLabel9
-            // 
-            metroSetLabel9.AutoSize = true;
-            metroSetLabel9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            metroSetLabel9.IsDerivedStyle = true;
-            metroSetLabel9.Location = new System.Drawing.Point(5, 110);
-            metroSetLabel9.Name = "metroSetLabel9";
-            metroSetLabel9.Size = new System.Drawing.Size(110, 17);
-            metroSetLabel9.Style = MetroSet_UI.Enums.Style.Light;
-            metroSetLabel9.StyleManager = null;
-            metroSetLabel9.TabIndex = 64;
-            metroSetLabel9.Text = "Database Name";
-            metroSetLabel9.ThemeAuthor = "Narwin";
-            metroSetLabel9.ThemeName = "MetroLite";
-            // 
-            // txtDatabase
-            // 
-            txtDatabase.AutoCompleteCustomSource = null;
-            txtDatabase.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            txtDatabase.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            txtDatabase.BorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtDatabase.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
-            txtDatabase.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtDatabase.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
-            txtDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txtDatabase.HoverColor = System.Drawing.Color.FromArgb(102, 102, 102);
-            txtDatabase.Image = null;
-            txtDatabase.IsDerivedStyle = true;
-            txtDatabase.Lines = null;
-            txtDatabase.Location = new System.Drawing.Point(135, 110);
-            txtDatabase.MaxLength = 100;
-            txtDatabase.Multiline = false;
-            txtDatabase.Name = "txtDatabase";
-            txtDatabase.ReadOnly = false;
-            txtDatabase.Size = new System.Drawing.Size(297, 27);
-            txtDatabase.Style = MetroSet_UI.Enums.Style.Light;
-            txtDatabase.StyleManager = null;
-            txtDatabase.TabIndex = 7;
-            txtDatabase.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            txtDatabase.ThemeAuthor = "Narwin";
-            txtDatabase.ThemeName = "MetroLite";
-            txtDatabase.UseSystemPasswordChar = false;
-            txtDatabase.WatermarkText = "";
-            // 
-            // metroSetLabel4
-            // 
-            metroSetLabel4.AutoSize = true;
-            metroSetLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            metroSetLabel4.IsDerivedStyle = true;
-            metroSetLabel4.Location = new System.Drawing.Point(5, 75);
-            metroSetLabel4.Name = "metroSetLabel4";
-            metroSetLabel4.Size = new System.Drawing.Size(34, 17);
-            metroSetLabel4.Style = MetroSet_UI.Enums.Style.Light;
-            metroSetLabel4.StyleManager = null;
-            metroSetLabel4.TabIndex = 62;
-            metroSetLabel4.Text = "Port";
-            metroSetLabel4.ThemeAuthor = "Narwin";
-            metroSetLabel4.ThemeName = "MetroLite";
-            // 
-            // txtPort
-            // 
-            txtPort.AutoCompleteCustomSource = null;
-            txtPort.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            txtPort.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            txtPort.BorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtPort.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
-            txtPort.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtPort.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
-            txtPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txtPort.HoverColor = System.Drawing.Color.FromArgb(102, 102, 102);
-            txtPort.Image = null;
-            txtPort.IsDerivedStyle = true;
-            txtPort.Lines = null;
-            txtPort.Location = new System.Drawing.Point(135, 75);
-            txtPort.MaxLength = 100;
-            txtPort.Multiline = false;
-            txtPort.Name = "txtPort";
-            txtPort.ReadOnly = false;
-            txtPort.Size = new System.Drawing.Size(297, 27);
-            txtPort.Style = MetroSet_UI.Enums.Style.Light;
-            txtPort.StyleManager = null;
-            txtPort.TabIndex = 6;
-            txtPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            txtPort.ThemeAuthor = "Narwin";
-            txtPort.ThemeName = "MetroLite";
-            txtPort.UseSystemPasswordChar = false;
-            txtPort.WatermarkText = "";
+            cmbDbTypesSQLODBC.AllowDrop = true;
+            cmbDbTypesSQLODBC.ArrowColor = System.Drawing.Color.FromArgb(150, 150, 150);
+            cmbDbTypesSQLODBC.BackColor = System.Drawing.Color.Transparent;
+            cmbDbTypesSQLODBC.BackgroundColor = System.Drawing.Color.FromArgb(238, 238, 238);
+            cmbDbTypesSQLODBC.BorderColor = System.Drawing.Color.FromArgb(150, 150, 150);
+            cmbDbTypesSQLODBC.CausesValidation = false;
+            cmbDbTypesSQLODBC.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
+            cmbDbTypesSQLODBC.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
+            cmbDbTypesSQLODBC.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
+            cmbDbTypesSQLODBC.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cmbDbTypesSQLODBC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbDbTypesSQLODBC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            cmbDbTypesSQLODBC.FormattingEnabled = true;
+            cmbDbTypesSQLODBC.IsDerivedStyle = true;
+            cmbDbTypesSQLODBC.ItemHeight = 20;
+            cmbDbTypesSQLODBC.Location = new System.Drawing.Point(135, 41);
+            cmbDbTypesSQLODBC.Name = "cmbDbTypesSQLODBC";
+            cmbDbTypesSQLODBC.SelectedItemBackColor = System.Drawing.Color.FromArgb(65, 177, 225);
+            cmbDbTypesSQLODBC.SelectedItemForeColor = System.Drawing.Color.White;
+            cmbDbTypesSQLODBC.Size = new System.Drawing.Size(261, 26);
+            cmbDbTypesSQLODBC.Style = MetroSet_UI.Enums.Style.Light;
+            cmbDbTypesSQLODBC.StyleManager = null;
+            cmbDbTypesSQLODBC.TabIndex = 6;
+            cmbDbTypesSQLODBC.ThemeAuthor = "Narwin";
+            cmbDbTypesSQLODBC.ThemeName = "MetroLite";
             // 
             // metroSetLabel5
             // 
             metroSetLabel5.AutoSize = true;
             metroSetLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             metroSetLabel5.IsDerivedStyle = true;
-            metroSetLabel5.Location = new System.Drawing.Point(5, 42);
+            metroSetLabel5.Location = new System.Drawing.Point(5, 41);
             metroSetLabel5.Name = "metroSetLabel5";
-            metroSetLabel5.Size = new System.Drawing.Size(37, 17);
+            metroSetLabel5.Size = new System.Drawing.Size(120, 17);
             metroSetLabel5.Style = MetroSet_UI.Enums.Style.Light;
             metroSetLabel5.StyleManager = null;
-            metroSetLabel5.TabIndex = 60;
-            metroSetLabel5.Text = "Host";
+            metroSetLabel5.TabIndex = 72;
+            metroSetLabel5.Text = "MsSql odbc conn.";
             metroSetLabel5.ThemeAuthor = "Narwin";
             metroSetLabel5.ThemeName = "MetroLite";
             // 
-            // txtHost
+            // cmbDbTypesPostgre
             // 
-            txtHost.AutoCompleteCustomSource = null;
-            txtHost.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            txtHost.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            txtHost.BorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtHost.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
-            txtHost.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtHost.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
-            txtHost.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txtHost.HoverColor = System.Drawing.Color.FromArgb(102, 102, 102);
-            txtHost.Image = null;
-            txtHost.IsDerivedStyle = true;
-            txtHost.Lines = null;
-            txtHost.Location = new System.Drawing.Point(135, 42);
-            txtHost.MaxLength = 100;
-            txtHost.Multiline = false;
-            txtHost.Name = "txtHost";
-            txtHost.ReadOnly = false;
-            txtHost.Size = new System.Drawing.Size(297, 27);
-            txtHost.Style = MetroSet_UI.Enums.Style.Light;
-            txtHost.StyleManager = null;
-            txtHost.TabIndex = 5;
-            txtHost.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            txtHost.ThemeAuthor = "Narwin";
-            txtHost.ThemeName = "MetroLite";
-            txtHost.UseSystemPasswordChar = false;
-            txtHost.WatermarkText = "";
+            cmbDbTypesPostgre.AllowDrop = true;
+            cmbDbTypesPostgre.ArrowColor = System.Drawing.Color.FromArgb(150, 150, 150);
+            cmbDbTypesPostgre.BackColor = System.Drawing.Color.Transparent;
+            cmbDbTypesPostgre.BackgroundColor = System.Drawing.Color.FromArgb(238, 238, 238);
+            cmbDbTypesPostgre.BorderColor = System.Drawing.Color.FromArgb(150, 150, 150);
+            cmbDbTypesPostgre.CausesValidation = false;
+            cmbDbTypesPostgre.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
+            cmbDbTypesPostgre.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
+            cmbDbTypesPostgre.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
+            cmbDbTypesPostgre.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cmbDbTypesPostgre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbDbTypesPostgre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            cmbDbTypesPostgre.FormattingEnabled = true;
+            cmbDbTypesPostgre.IsDerivedStyle = true;
+            cmbDbTypesPostgre.ItemHeight = 20;
+            cmbDbTypesPostgre.Location = new System.Drawing.Point(135, 73);
+            cmbDbTypesPostgre.Name = "cmbDbTypesPostgre";
+            cmbDbTypesPostgre.SelectedItemBackColor = System.Drawing.Color.FromArgb(65, 177, 225);
+            cmbDbTypesPostgre.SelectedItemForeColor = System.Drawing.Color.White;
+            cmbDbTypesPostgre.Size = new System.Drawing.Size(297, 26);
+            cmbDbTypesPostgre.Style = MetroSet_UI.Enums.Style.Light;
+            cmbDbTypesPostgre.StyleManager = null;
+            cmbDbTypesPostgre.TabIndex = 9;
+            cmbDbTypesPostgre.ThemeAuthor = "Narwin";
+            cmbDbTypesPostgre.ThemeName = "MetroLite";
+            // 
+            // metroSetLabel4
+            // 
+            metroSetLabel4.AutoSize = true;
+            metroSetLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            metroSetLabel4.IsDerivedStyle = true;
+            metroSetLabel4.Location = new System.Drawing.Point(5, 73);
+            metroSetLabel4.Name = "metroSetLabel4";
+            metroSetLabel4.Size = new System.Drawing.Size(92, 17);
+            metroSetLabel4.Style = MetroSet_UI.Enums.Style.Light;
+            metroSetLabel4.StyleManager = null;
+            metroSetLabel4.TabIndex = 70;
+            metroSetLabel4.Text = "Postgre conn";
+            metroSetLabel4.ThemeAuthor = "Narwin";
+            metroSetLabel4.ThemeName = "MetroLite";
+            // 
+            // cmbDbTypesSQLexp
+            // 
+            cmbDbTypesSQLexp.AllowDrop = true;
+            cmbDbTypesSQLexp.ArrowColor = System.Drawing.Color.FromArgb(150, 150, 150);
+            cmbDbTypesSQLexp.BackColor = System.Drawing.Color.Transparent;
+            cmbDbTypesSQLexp.BackgroundColor = System.Drawing.Color.FromArgb(238, 238, 238);
+            cmbDbTypesSQLexp.BorderColor = System.Drawing.Color.FromArgb(150, 150, 150);
+            cmbDbTypesSQLexp.CausesValidation = false;
+            cmbDbTypesSQLexp.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
+            cmbDbTypesSQLexp.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
+            cmbDbTypesSQLexp.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
+            cmbDbTypesSQLexp.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cmbDbTypesSQLexp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbDbTypesSQLexp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            cmbDbTypesSQLexp.FormattingEnabled = true;
+            cmbDbTypesSQLexp.IsDerivedStyle = true;
+            cmbDbTypesSQLexp.ItemHeight = 20;
+            cmbDbTypesSQLexp.Location = new System.Drawing.Point(135, 9);
+            cmbDbTypesSQLexp.Name = "cmbDbTypesSQLexp";
+            cmbDbTypesSQLexp.SelectedItemBackColor = System.Drawing.Color.FromArgb(65, 177, 225);
+            cmbDbTypesSQLexp.SelectedItemForeColor = System.Drawing.Color.White;
+            cmbDbTypesSQLexp.Size = new System.Drawing.Size(261, 26);
+            cmbDbTypesSQLexp.Style = MetroSet_UI.Enums.Style.Light;
+            cmbDbTypesSQLexp.StyleManager = null;
+            cmbDbTypesSQLexp.TabIndex = 5;
+            cmbDbTypesSQLexp.ThemeAuthor = "Narwin";
+            cmbDbTypesSQLexp.ThemeName = "MetroLite";
             // 
             // metroSetLabel6
             // 
@@ -545,42 +468,13 @@ namespace AgentApp
             metroSetLabel6.IsDerivedStyle = true;
             metroSetLabel6.Location = new System.Drawing.Point(5, 9);
             metroSetLabel6.Name = "metroSetLabel6";
-            metroSetLabel6.Size = new System.Drawing.Size(105, 17);
+            metroSetLabel6.Size = new System.Drawing.Size(111, 17);
             metroSetLabel6.Style = MetroSet_UI.Enums.Style.Light;
             metroSetLabel6.StyleManager = null;
             metroSetLabel6.TabIndex = 58;
-            metroSetLabel6.Text = "Database Type";
+            metroSetLabel6.Text = "MsSql exp conn.";
             metroSetLabel6.ThemeAuthor = "Narwin";
             metroSetLabel6.ThemeName = "MetroLite";
-            // 
-            // txtDbType
-            // 
-            txtDbType.AutoCompleteCustomSource = null;
-            txtDbType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            txtDbType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            txtDbType.BorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtDbType.DisabledBackColor = System.Drawing.Color.FromArgb(204, 204, 204);
-            txtDbType.DisabledBorderColor = System.Drawing.Color.FromArgb(155, 155, 155);
-            txtDbType.DisabledForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
-            txtDbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            txtDbType.HoverColor = System.Drawing.Color.FromArgb(102, 102, 102);
-            txtDbType.Image = null;
-            txtDbType.IsDerivedStyle = true;
-            txtDbType.Lines = null;
-            txtDbType.Location = new System.Drawing.Point(135, 9);
-            txtDbType.MaxLength = 100;
-            txtDbType.Multiline = false;
-            txtDbType.Name = "txtDbType";
-            txtDbType.ReadOnly = false;
-            txtDbType.Size = new System.Drawing.Size(297, 27);
-            txtDbType.Style = MetroSet_UI.Enums.Style.Light;
-            txtDbType.StyleManager = null;
-            txtDbType.TabIndex = 4;
-            txtDbType.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            txtDbType.ThemeAuthor = "Narwin";
-            txtDbType.ThemeName = "MetroLite";
-            txtDbType.UseSystemPasswordChar = false;
-            txtDbType.WatermarkText = "";
             // 
             // chkQuartzJobs
             // 
@@ -660,6 +554,8 @@ namespace AgentApp
             panel3.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -678,19 +574,16 @@ namespace AgentApp
         private MetroSet_UI.Controls.MetroSetLabel metroSetLabel1;
         private MetroSet_UI.Controls.MetroSetTextBox txtAgentUUID;
         private System.Windows.Forms.Panel panel2;
-        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel7;
-        private MetroSet_UI.Controls.MetroSetTextBox txtPassword;
-        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel8;
-        private MetroSet_UI.Controls.MetroSetTextBox txtUsername;
-        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel9;
-        private MetroSet_UI.Controls.MetroSetTextBox txtDatabase;
-        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel4;
-        private MetroSet_UI.Controls.MetroSetTextBox txtPort;
-        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel5;
-        private MetroSet_UI.Controls.MetroSetTextBox txtHost;
         private MetroSet_UI.Controls.MetroSetLabel metroSetLabel6;
-        private MetroSet_UI.Controls.MetroSetTextBox txtDbType;
         private MetroSet_UI.Controls.MetroSetLabel metroSetLabel10;
         private MetroSet_UI.Controls.MetroSetTextBox txtLoadBalancerUrl;
+        private MetroSet_UI.Controls.MetroSetComboBox cmbDbTypesSQLexp;
+        private MetroSet_UI.Controls.MetroSetComboBox cmbDbTypesPostgre;
+        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel4;
+        private MetroSet_UI.Controls.MetroSetComboBox cmbDbTypesSQLODBC;
+        private MetroSet_UI.Controls.MetroSetLabel metroSetLabel5;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }

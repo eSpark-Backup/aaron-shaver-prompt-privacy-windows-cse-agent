@@ -34,20 +34,15 @@ namespace eSpark_WindowsFIA
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             lblFileSystemWatcher = new MetroSet_UI.Controls.MetroSetLabel();
             tootltip1label1 = new MetroSet_UI.Controls.MetroSetLabel();
-            timer_callByTaskSched = new System.Windows.Forms.Timer(components);
             toolTip1 = new System.Windows.Forms.ToolTip(components);
             panel1 = new MetroSet_UI.Controls.MetroSetPanel();
             txtCurrentStatus = new MetroSet_UI.Controls.MetroSetTextBox();
             folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            timer1 = new System.Windows.Forms.Timer(components);
-            progressbarTimer = new System.Windows.Forms.Timer(components);
-            FSW_trayicon = new System.Windows.Forms.NotifyIcon(components);
-            FSW_trayMenu = new System.Windows.Forms.ContextMenuStrip(components);
+            CSE_dbIndexer_trayicon = new System.Windows.Forms.NotifyIcon(components);
+            CSE_dbIndexer_trayMenu = new System.Windows.Forms.ContextMenuStrip(components);
             FSWopen_toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            Quartz_toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            TaskScheduler_toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             About_toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             Exit_toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
@@ -57,8 +52,15 @@ namespace eSpark_WindowsFIA
             btnSettings = new MetroSet_UI.Controls.MetroSetButton();
             button1 = new MetroSet_UI.Controls.MetroSetButton();
             btnConnectCSE = new MetroSet_UI.Controls.MetroSetButton();
+            pbPostGreDatabase1Status = new System.Windows.Forms.PictureBox();
+            pbSQLDatabase1Status = new System.Windows.Forms.PictureBox();
+            lblSQL = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            timer1 = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
-            FSW_trayMenu.SuspendLayout();
+            CSE_dbIndexer_trayMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPostGreDatabase1Status).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbSQLDatabase1Status).BeginInit();
             SuspendLayout();
             // 
             // lblFileSystemWatcher
@@ -75,7 +77,7 @@ namespace eSpark_WindowsFIA
             lblFileSystemWatcher.Style = MetroSet_UI.Enums.Style.Light;
             lblFileSystemWatcher.StyleManager = null;
             lblFileSystemWatcher.TabIndex = 20;
-            lblFileSystemWatcher.Text = "File System Watcher stopped!..................................................................................";
+            lblFileSystemWatcher.Text = "CSE Indexer >> stopped!..................................................................................";
             lblFileSystemWatcher.ThemeAuthor = "Narwin";
             lblFileSystemWatcher.ThemeName = "MetroLite";
             // 
@@ -99,11 +101,6 @@ namespace eSpark_WindowsFIA
             tootltip1label1.ThemeAuthor = "Narwin";
             tootltip1label1.ThemeName = "MetroLite";
             tootltip1label1.UseCompatibleTextRendering = true;
-            // 
-            // timer_callByTaskSched
-            // 
-            timer_callByTaskSched.Interval = 5000;
-            timer_callByTaskSched.Tick += timer1_Tick;
             // 
             // panel1
             // 
@@ -163,46 +160,26 @@ namespace eSpark_WindowsFIA
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // timer1
+            // CSE_dbIndexer_trayicon
             // 
-            timer1.Interval = 500;
-            timer1.Tick += timer1_Tick;
+            CSE_dbIndexer_trayicon.BalloonTipText = "This is PromptPrivacy CSE dbIndexer";
+            CSE_dbIndexer_trayicon.BalloonTipTitle = "This is PromptPrivacy CSE dbIndexer";
+            CSE_dbIndexer_trayicon.ContextMenuStrip = CSE_dbIndexer_trayMenu;
+            CSE_dbIndexer_trayicon.Icon = (System.Drawing.Icon)resources.GetObject("CSE_dbIndexer_trayicon.Icon");
+            CSE_dbIndexer_trayicon.Text = "PromptPrivacy CSE dbIndexer";
+            CSE_dbIndexer_trayicon.Visible = true;
             // 
-            // progressbarTimer
+            // CSE_dbIndexer_trayMenu
             // 
-            progressbarTimer.Interval = 50;
-            // 
-            // FSW_trayicon
-            // 
-            FSW_trayicon.BalloonTipText = "This is eSPark FSW";
-            FSW_trayicon.BalloonTipTitle = "This is eSPark FSW";
-            FSW_trayicon.ContextMenuStrip = FSW_trayMenu;
-            FSW_trayicon.Icon = (System.Drawing.Icon)resources.GetObject("FSW_trayicon.Icon");
-            FSW_trayicon.Text = "eSpark FSW";
-            FSW_trayicon.Visible = true;
-            // 
-            // FSW_trayMenu
-            // 
-            FSW_trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { FSWopen_toolStripMenuItem2, Quartz_toolStripMenuItem, TaskScheduler_toolStripMenuItem1, About_toolStripMenuItem1, Exit_toolStripMenuItem3 });
-            FSW_trayMenu.Name = "contextMenuStrip1";
-            FSW_trayMenu.Size = new System.Drawing.Size(201, 114);
+            CSE_dbIndexer_trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { FSWopen_toolStripMenuItem2, About_toolStripMenuItem1, Exit_toolStripMenuItem3 });
+            CSE_dbIndexer_trayMenu.Name = "contextMenuStrip1";
+            CSE_dbIndexer_trayMenu.Size = new System.Drawing.Size(201, 70);
             // 
             // FSWopen_toolStripMenuItem2
             // 
             FSWopen_toolStripMenuItem2.Name = "FSWopen_toolStripMenuItem2";
             FSWopen_toolStripMenuItem2.Size = new System.Drawing.Size(200, 22);
             FSWopen_toolStripMenuItem2.Text = "Open File System Agent";
-            FSWopen_toolStripMenuItem2.Click += FSWopen_toolStripMenuItem2_Click;
-            // 
-            // Quartz_toolStripMenuItem
-            // 
-            Quartz_toolStripMenuItem.Name = "Quartz_toolStripMenuItem";
-            Quartz_toolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            // 
-            // TaskScheduler_toolStripMenuItem1
-            // 
-            TaskScheduler_toolStripMenuItem1.Name = "TaskScheduler_toolStripMenuItem1";
-            TaskScheduler_toolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
             // 
             // About_toolStripMenuItem1
             // 
@@ -371,6 +348,55 @@ namespace eSpark_WindowsFIA
             btnConnectCSE.ThemeName = "MetroLite";
             btnConnectCSE.Click += btnConnectCSE_Click;
             // 
+            // pbPostGreDatabase1Status
+            // 
+            pbPostGreDatabase1Status.BackColor = System.Drawing.Color.White;
+            pbPostGreDatabase1Status.InitialImage = dbIntegrator_postgre.Properties.Resources.image;
+            pbPostGreDatabase1Status.Location = new System.Drawing.Point(578, 63);
+            pbPostGreDatabase1Status.Name = "pbPostGreDatabase1Status";
+            pbPostGreDatabase1Status.Size = new System.Drawing.Size(35, 31);
+            pbPostGreDatabase1Status.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbPostGreDatabase1Status.TabIndex = 37;
+            pbPostGreDatabase1Status.TabStop = false;
+            // 
+            // pbSQLDatabase1Status
+            // 
+            pbSQLDatabase1Status.BackColor = System.Drawing.Color.White;
+            pbSQLDatabase1Status.InitialImage = dbIntegrator_postgre.Properties.Resources.image;
+            pbSQLDatabase1Status.Location = new System.Drawing.Point(530, 63);
+            pbSQLDatabase1Status.Name = "pbSQLDatabase1Status";
+            pbSQLDatabase1Status.Size = new System.Drawing.Size(35, 31);
+            pbSQLDatabase1Status.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbSQLDatabase1Status.TabIndex = 38;
+            pbSQLDatabase1Status.TabStop = false;
+            // 
+            // lblSQL
+            // 
+            lblSQL.AutoSize = true;
+            lblSQL.BackColor = System.Drawing.Color.White;
+            lblSQL.Font = new System.Drawing.Font("Bookman Old Style", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            lblSQL.Location = new System.Drawing.Point(530, 45);
+            lblSQL.Name = "lblSQL";
+            lblSQL.Size = new System.Drawing.Size(30, 15);
+            lblSQL.TabIndex = 39;
+            lblSQL.Text = "SQL";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = System.Drawing.Color.White;
+            label1.Font = new System.Drawing.Font("Bookman Old Style", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label1.Location = new System.Drawing.Point(578, 45);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(36, 15);
+            label1.TabIndex = 40;
+            label1.Text = "P.gre";
+            // 
+            // timer1
+            // 
+            timer1.Interval = 1000;
+            timer1.Tick += timer1_Tick;
+            // 
             // MainForm
             // 
             AllowResize = false;
@@ -379,6 +405,10 @@ namespace eSpark_WindowsFIA
             BorderThickness = 10F;
             ClientSize = new System.Drawing.Size(644, 450);
             ControlBox = false;
+            Controls.Add(label1);
+            Controls.Add(lblSQL);
+            Controls.Add(pbSQLDatabase1Status);
+            Controls.Add(pbPostGreDatabase1Status);
             Controls.Add(btnSettings);
             Controls.Add(button1);
             Controls.Add(btnConnectCSE);
@@ -393,14 +423,17 @@ namespace eSpark_WindowsFIA
             ShowBorder = true;
             SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "PromptPrivacy Database Indexer - postgre";
+            Text = "PromptPrivacy Database Indexer - msSQL- postgre";
             TextColor = System.Drawing.Color.Black;
             HelpButtonClicked += Form1_HelpButtonClicked;
             FormClosing += Form1_FormClosing;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            FSW_trayMenu.ResumeLayout(false);
+            CSE_dbIndexer_trayMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbPostGreDatabase1Status).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbSQLDatabase1Status).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -409,8 +442,8 @@ namespace eSpark_WindowsFIA
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.NotifyIcon FSW_trayicon;
-        private System.Windows.Forms.ContextMenuStrip FSW_trayMenu;
+        private System.Windows.Forms.NotifyIcon CSE_dbIndexer_trayicon;
+        private System.Windows.Forms.ContextMenuStrip CSE_dbIndexer_trayMenu;
         private System.Windows.Forms.ToolStripMenuItem FSWopen_toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem Quartz_toolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TaskScheduler_toolStripMenuItem1;
@@ -422,12 +455,14 @@ namespace eSpark_WindowsFIA
         private MetroSet_UI.Controls.MetroSetLabel tootltip1label1;
         private MetroSet_UI.Controls.MetroSetControlBox metroSetControlBox1;
         private MetroSet_UI.Controls.MetroSetLabel metroSetLabel9;
-        public System.Windows.Forms.Timer timer1;
-        public System.Windows.Forms.Timer progressbarTimer;
-        public System.Windows.Forms.Timer timer_callByTaskSched;
         public MetroSet_UI.Controls.MetroSetTextBox txtCurrentStatus;
         private MetroSet_UI.Controls.MetroSetButton btnSettings;
         private MetroSet_UI.Controls.MetroSetButton button1;
         private MetroSet_UI.Controls.MetroSetButton btnConnectCSE;
+        private System.Windows.Forms.PictureBox pbPostGreDatabase1Status;
+        private System.Windows.Forms.PictureBox pbSQLDatabase1Status;
+        private System.Windows.Forms.Label lblSQL;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
